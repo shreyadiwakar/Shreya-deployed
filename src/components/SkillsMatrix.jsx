@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { Code, Layout, Server, Wrench, CheckCircle2, Sparkles } from 'lucide-react';
-import { SkillCategory } from '../types';
 
-interface SkillsMatrixProps {
-  skillCategories: SkillCategory[];
-}
+export const SkillsMatrix = ({ skillCategories }) => {
+  const [activeTab, setActiveTab] = useState(0);
 
-export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skillCategories }) => {
-  const [activeTab, setActiveTab] = useState<number>(0);
-
-  const getTabStyles = (accent: SkillCategory['accent']) => {
+  const getTabStyles = (accent) => {
     switch (accent) {
       case 'yellow':
         return {
@@ -45,7 +40,7 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skillCategories }) =
     }
   };
 
-  const getIcon = (title: string) => {
+  const getIcon = (title) => {
     if (title.includes('Language')) return <Code className="w-4 h-4" />;
     if (title.includes('Frontend')) return <Layout className="w-4 h-4" />;
     if (title.includes('Backend')) return <Server className="w-4 h-4" />;
@@ -58,12 +53,12 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skillCategories }) =
   return (
     <section id="skills-matrix" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
           <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
           Technical Fluency
-        </div>
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-          Skills & <span className="text-emerald-600">Technologies</span>
+          Skills &amp; <span className="text-emerald-600">Technologies</span>
         </h2>
         <p className="mt-3 text-base sm:text-lg text-slate-600">
           Core proficiencies built through hands-on project architectures, algorithm benchmarking, and open-source contributions.
@@ -92,12 +87,12 @@ export const SkillsMatrix: React.FC<SkillsMatrixProps> = ({ skillCategories }) =
       <div className={`p-5 sm:p-7 rounded-xl border ${styles.card} max-w-4xl mx-auto transition-all`}>
         <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-200/60">
           <div className="flex items-center gap-2">
-            <span className={`p-1.5 rounded-lg border ${styles.pill}`}>
+            <span className="text-slate-800">
               {getIcon(currentCategory.title)}
             </span>
             <h3 className="text-lg sm:text-xl font-bold text-slate-900">{currentCategory.title}</h3>
           </div>
-          <span className="text-xs font-mono text-slate-500 bg-white px-2.5 py-0.5 rounded-md border border-slate-200">
+          <span className="text-xs font-mono text-slate-500 font-medium">
             {currentCategory.skills.length} core proficiencies
           </span>
         </div>

@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Copy, Check, Send, Github, Linkedin, Twitter, Sparkles, MessageSquare, ArrowUpRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { ProfileData } from '../types';
 
-interface ContactSectionProps {
-  profile: ProfileData;
-}
-
-export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
+export const ContactSection = ({ profile }) => {
   const [copied, setCopied] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
@@ -30,7 +25,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
     setTimeout(() => setCopied(false), 2400);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
 
@@ -50,10 +45,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
   return (
     <section id="contact-section" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 text-pink-900 text-xs font-semibold uppercase tracking-wider mb-3">
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
           <MessageSquare className="w-3.5 h-3.5 text-pink-600" />
           Get In Touch
-        </div>
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           Let's Build Something <span className="text-pink-600">Extraordinary</span>
         </h2>
@@ -65,16 +60,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
         {/* Left Column: Direct Info & Socials in Soft Pastels */}
         <div className="lg:col-span-5 space-y-5">
-          {/* Email Card with Copy */}
-          <div className="p-6 rounded-3xl bg-pink-50/90 border-2 border-pink-200/90 shadow-xs">
-            <span className="text-xs font-mono font-bold text-pink-700 uppercase tracking-wider">
-              Direct Inquiries
-            </span>
-            <h4 className="text-lg font-bold text-slate-900 mt-1">Email Me Directly</h4>
-            <p className="text-xs text-slate-600 mt-1 mb-4">
-              Fastest response time for internship queries and collaborations.
-            </p>
+          {/* Email & Phone Card with Copy */}
+          <div className="p-6 rounded-3xl bg-pink-50/90 border-2 border-pink-200/90 shadow-xs space-y-4">
+            <div>
+              <span className="text-xs font-mono font-bold text-pink-700 uppercase tracking-wider">
+                Direct Inquiries
+              </span>
+              <h4 className="text-lg font-bold text-slate-900 mt-0.5">Contact Shreya</h4>
+              <p className="text-xs text-slate-600 mt-1">
+                Fastest response for software internships and projects.
+              </p>
+            </div>
 
+            {/* Email */}
             <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-white border border-pink-200">
               <span className="text-xs sm:text-sm font-mono text-slate-800 truncate select-all">
                 {profile.email}
@@ -95,6 +93,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   </>
                 )}
               </button>
+            </div>
+
+            {/* Phone */}
+            <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-white border border-pink-200">
+              <span className="text-xs sm:text-sm font-mono text-slate-800 truncate select-all">
+                +91-8851493754
+              </span>
+              <a
+                href="tel:+918851493754"
+                className="px-3 py-1.5 rounded-xl bg-pink-100 hover:bg-pink-200 text-pink-900 text-xs font-semibold transition-colors shrink-0"
+              >
+                Call
+              </a>
             </div>
           </div>
 

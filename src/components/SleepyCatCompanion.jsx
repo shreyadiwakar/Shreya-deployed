@@ -2,11 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Volume2, VolumeX, Heart, Moon } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-interface SleepyCatCompanionProps {
-  userName?: string;
-  college?: string;
-}
-
 const CAT_THOUGHTS = [
   'Zzz... dreaming in C++ and pastel watercolors...',
   'Purrrr! Shreya says hello from Delhi Technological University (DTU)!',
@@ -18,29 +13,29 @@ const CAT_THOUGHTS = [
   'Snuggling up on this warm screen... zzz...',
 ];
 
-export const SleepyCatCompanion: React.FC<SleepyCatCompanionProps> = ({
+export const SleepyCatCompanion = ({
   userName = 'Shreya',
   college = 'Delhi Technological University',
 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isWalking, setIsWalking] = useState(false);
-  const [direction, setDirection] = useState<'right' | 'left'>('right');
+  const [direction, setDirection] = useState('right');
   const [walkFrame, setWalkFrame] = useState(0);
-  const [speechBubble, setSpeechBubble] = useState<string | null>(null);
+  const [speechBubble, setSpeechBubble] = useState(null);
   const [isSleeping, setIsSleeping] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [petCount, setPetCount] = useState(0);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const lastScrollY = useRef(0);
-  const scrollTimeout = useRef<number | null>(null);
-  const bubbleTimeout = useRef<number | null>(null);
+  const scrollTimeout = useRef(null);
+  const bubbleTimeout = useRef(null);
 
   // Play gentle Web Audio API purr / melodic chime
   const playCatChime = () => {
     if (!soundEnabled) return;
     try {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       const ctx = new AudioContextClass();
 
       // Gentle pastel synth notes

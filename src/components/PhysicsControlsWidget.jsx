@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { Magnet, Sparkles, MousePointer, ChevronUp, ChevronDown, RefreshCw } from 'lucide-react';
 
-interface PhysicsControlsWidgetProps {
-  cursorEnabled: boolean;
-  onToggleCursor: () => void;
-  repelMultiplier: number;
-  onChangeRepelMultiplier: (val: number) => void;
-}
-
-export const PhysicsControlsWidget: React.FC<PhysicsControlsWidgetProps> = ({
+export const PhysicsControlsWidget = ({
   cursorEnabled,
   onToggleCursor,
   repelMultiplier,
@@ -26,7 +19,7 @@ export const PhysicsControlsWidget: React.FC<PhysicsControlsWidgetProps> = ({
         >
           <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping" />
           <Magnet className="w-3.5 h-3.5 text-sky-500" />
-          <span>Physics & Neon</span>
+          <span>Physics &amp; Neon</span>
           {isExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
         </button>
 

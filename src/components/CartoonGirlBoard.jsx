@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { GraduationCap, Sparkles, Palette, Code, CheckCircle2 } from 'lucide-react';
-import { ProfileData } from '../types';
 
-interface CartoonGirlBoardProps {
-  profile: ProfileData;
-}
-
-export const CartoonGirlBoard: React.FC<CartoonGirlBoardProps> = ({ profile }) => {
+export const CartoonGirlBoard = ({ profile }) => {
   const [scrollY, setScrollY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [speechBubbleText, setSpeechBubbleText] = useState('Welcome to my portfolio! 👋');
@@ -30,7 +25,7 @@ export const CartoonGirlBoard: React.FC<CartoonGirlBoardProps> = ({ profile }) =
       className="relative flex flex-col md:flex-row items-center justify-center gap-6 my-6 max-w-2xl mx-auto z-20 select-none"
       onMouseEnter={() => {
         setIsHovered(true);
-        setSpeechBubbleText('DTU CSE ‘28 • Compiler & Fine Art');
+        setSpeechBubbleText('DTU CSE ‘28 • Computer Science Engineer');
       }}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -178,16 +173,12 @@ export const CartoonGirlBoard: React.FC<CartoonGirlBoardProps> = ({ profile }) =
         className="w-full max-w-sm sm:max-w-md bg-white/95 rounded-xl border border-slate-300/80 shadow-md p-5 text-left relative overflow-hidden backdrop-blur-xs"
       >
         {/* Top Board Frame Clips */}
-        <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-200">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-            <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 ml-1">
-              DTU CSE • LAB BOARD
-            </span>
-          </div>
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">
-            24/CS/425 • G-2
+        <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-200">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600">
+            DTU CSE • PROFILE BOARD
+          </span>
+          <span className="text-[11px] font-mono text-slate-700 font-bold">
+            24/CS/425 • CGPA 8.234
           </span>
         </div>
 
@@ -200,44 +191,44 @@ export const CartoonGirlBoard: React.FC<CartoonGirlBoardProps> = ({ profile }) =
                 <span className="text-xs font-normal text-slate-500 font-mono">B.Tech ‘28</span>
               </h3>
               <p className="text-xs text-slate-600 font-medium">
-                Delhi Technological University (DTU)
+                Delhi Technological University (formerly DCE)
               </p>
             </div>
-            <div className="p-1.5 rounded-lg bg-sky-50 border border-sky-200 text-sky-700">
+            <div className="text-sky-700">
               <GraduationCap className="w-4 h-4" />
             </div>
           </div>
 
-          {/* Academic & Creative Pillars on the Board */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
-            <div className="p-2 rounded-lg bg-purple-50/80 border border-purple-200/80 text-xs">
-              <div className="font-mono font-bold text-purple-900 flex items-center gap-1">
-                <Code className="w-3 h-3 text-purple-600" />
-                CS 301 Compilers
+          {/* Academic & Experience Highlights on the Board */}
+          <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100 text-xs">
+            <div>
+              <div className="font-mono font-bold text-slate-900 flex items-center gap-1">
+                <Code className="w-3 h-3 text-sky-600" />
+                Full-Stack &amp; Systems
               </div>
-              <p className="text-[11px] text-purple-800 mt-0.5 font-mono">
-                NFA to DFA Subset &amp; LEX
+              <p className="text-[11px] text-slate-600 mt-0.5 font-mono leading-tight">
+                React, Node.js &amp; C++ DSA
               </p>
             </div>
 
-            <div className="p-2 rounded-lg bg-pink-50/80 border border-pink-200/80 text-xs">
-              <div className="font-mono font-bold text-pink-900 flex items-center gap-1">
-                <Palette className="w-3 h-3 text-pink-600" />
-                Painting Studio
+            <div>
+              <div className="font-mono font-bold text-slate-900 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-pink-600" />
+                Sponsogram
               </div>
-              <p className="text-[11px] text-pink-800 mt-0.5">
-                Pastel &amp; Watercolor Art
+              <p className="text-[11px] text-slate-600 mt-0.5 leading-tight">
+                Core Tech &amp; Content Lead
               </p>
             </div>
           </div>
 
-          {/* Mini Status Quote */}
+          {/* Mini Status / Contact Quote */}
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
             <span className="flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-              Standing Anchored
+              diwakar.shreya.2006@gmail.com
             </span>
-            <span>Scrolls with hero</span>
+            <span className="text-slate-700 font-semibold">+91-8851493754</span>
           </div>
         </div>
 

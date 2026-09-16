@@ -1,29 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-type SymmetricShapeType =
-  | 'hexagon_inscribed'
-  | 'octagram'
-  | 'automata_ring'
-  | 'rosette_petals'
-  | 'faceted_diamond'
-  | 'crystal_cross';
-
-interface GeometricObject {
-  x: number;
-  y: number;
-  originX: number;
-  originY: number;
-  vx: number;
-  vy: number;
-  shapeType: SymmetricShapeType;
-  color: string;
-  size: number;
-  angle: number;
-  rotationSpeed: number;
-  baseAlpha: number;
-  scale: number;
-}
-
 const SYMMETRIC_PALETTE = [
   'rgba(236, 72, 153, 0.55)', // soft rose/pink
   'rgba(14, 165, 233, 0.55)', // soft sky blue
@@ -33,24 +9,19 @@ const SYMMETRIC_PALETTE = [
   'rgba(99, 102, 241, 0.55)', // soft indigo
 ];
 
-interface RepellingBackgroundProps {
-  repelForceMultiplier?: number;
-  containerRef?: React.RefObject<HTMLElement | null>;
-}
-
-export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
+export const RepellingBackground = ({
   repelForceMultiplier = 1.0,
   containerRef,
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mouseRef = useRef<{ x: number; y: number; active: boolean }>({
+  const canvasRef = useRef(null);
+  const mouseRef = useRef({
     x: -1000,
     y: -1000,
     active: false,
   });
 
-  const objectsRef = useRef<GeometricObject[]>([]);
-  const animationFrameRef = useRef<number | null>(null);
+  const objectsRef = useRef([]);
+  const animationFrameRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -69,7 +40,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
     let width = (canvas.width = bounds.width);
     let height = (canvas.height = bounds.height);
 
-    const shapeTypes: SymmetricShapeType[] = [
+    const shapeTypes = [
       'hexagon_inscribed',
       'octagram',
       'automata_ring',
@@ -78,10 +49,10 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       'crystal_cross',
     ];
 
-    // Distribute symmetric objects in a balanced geometric lattice
-    const objects: GeometricObject[] = [];
-    const cols = Math.max(4, Math.floor(width / 130));
-    const rows = Math.max(3, Math.floor(height / 120));
+    // Distribute symmetric objects in a balanced geometric lattice covering the entire hero section
+    const objects = [];
+    const cols = Math.max(5, Math.floor(width / 130));
+    const rows = Math.max(4, Math.floor(height / 115));
     const cellW = width / cols;
     const cellH = height / rows;
 
@@ -114,7 +85,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
     objectsRef.current = objects;
 
     // Mouse events strictly bound to hero container
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e) => {
       bounds = getBounds();
       const clientX = e.clientX;
       const clientY = e.clientY;
@@ -146,12 +117,12 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
     };
 
     const targetElement = containerRef?.current || window;
-    targetElement.addEventListener('mousemove', handleMouseMove as EventListener);
-    targetElement.addEventListener('mouseleave', handleMouseLeave as EventListener);
+    targetElement.addEventListener('mousemove', handleMouseMove);
+    targetElement.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('resize', handleResize);
 
     // Drawing helpers for each symmetric object
-    const drawHexagonInscribed = (c: CanvasRenderingContext2D, s: number) => {
+    const drawHexagonInscribed = (c, s) => {
       // Outer regular hexagon
       c.beginPath();
       for (let i = 0; i < 6; i++) {
@@ -193,7 +164,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       c.stroke();
     };
 
-    const drawOctagram = (c: CanvasRenderingContext2D, s: number) => {
+    const drawOctagram = (c, s) => {
       // Two overlapping squares rotated 45 deg
       c.strokeRect(-s * 0.65, -s * 0.65, s * 1.3, s * 1.3);
 
@@ -213,7 +184,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       }
     };
 
-    const drawAutomataRing = (c: CanvasRenderingContext2D, s: number) => {
+    const drawAutomataRing = (c, s) => {
       // Concentric acceptance state rings (formal automata)
       c.beginPath();
       c.arc(0, 0, s, 0, Math.PI * 2);
@@ -241,7 +212,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       c.fill();
     };
 
-    const drawRosettePetals = (c: CanvasRenderingContext2D, s: number) => {
+    const drawRosettePetals = (c, s) => {
       // 6-petal sacred geometry rosette
       for (let i = 0; i < 6; i++) {
         const a = (i * Math.PI) / 3;
@@ -256,7 +227,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       c.stroke();
     };
 
-    const drawFacetedDiamond = (c: CanvasRenderingContext2D, s: number) => {
+    const drawFacetedDiamond = (c, s) => {
       // Faceted 8-point isometric diamond
       c.beginPath();
       c.moveTo(0, -s);
@@ -279,7 +250,7 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
       c.stroke();
     };
 
-    const drawCrystalCross = (c: CanvasRenderingContext2D, s: number) => {
+    const drawCrystalCross = (c, s) => {
       // 4-fold crystal cross with diamond finials
       c.beginPath();
       c.moveTo(0, -s * 1.1);
@@ -411,8 +382,8 @@ export const RepellingBackground: React.FC<RepellingBackgroundProps> = ({
     render();
 
     return () => {
-      targetElement.removeEventListener('mousemove', handleMouseMove as EventListener);
-      targetElement.removeEventListener('mouseleave', handleMouseLeave as EventListener);
+      targetElement.removeEventListener('mousemove', handleMouseMove);
+      targetElement.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);

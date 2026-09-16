@@ -1,27 +1,18 @@
 import React, { useState } from 'react';
 import { X, Save, RotateCcw, Sparkles, User, Mail, FileText, Globe } from 'lucide-react';
-import { ProfileData } from '../types';
 
-interface PortfolioCustomizerModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  profile: ProfileData;
-  onSave: (updated: ProfileData) => void;
-  onReset: () => void;
-}
-
-export const PortfolioCustomizerModal: React.FC<PortfolioCustomizerModalProps> = ({
+export const PortfolioCustomizerModal = ({
   isOpen,
   onClose,
   profile,
   onSave,
   onReset,
 }) => {
-  const [formData, setFormData] = useState<ProfileData>(profile);
+  const [formData, setFormData] = useState(profile);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
     onClose();

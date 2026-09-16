@@ -1,14 +1,9 @@
 import React from 'react';
 import { Briefcase, Calendar, MapPin, CheckCircle, Trophy, Sparkles } from 'lucide-react';
-import { ExperienceItem } from '../types';
 import { achievements } from '../data/portfolioData';
 
-interface ExperienceTimelineProps {
-  experience: ExperienceItem[];
-}
-
-export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experience }) => {
-  const getAccent = (accent: ExperienceItem['accent']) => {
+export const ExperienceTimeline = ({ experience }) => {
+  const getAccent = (accent) => {
     switch (accent) {
       case 'yellow':
         return 'border-amber-300 bg-amber-50/70 text-amber-900';
@@ -27,10 +22,10 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
   return (
     <section id="experience-section" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-semibold uppercase tracking-wider mb-3">
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
           <Briefcase className="w-3.5 h-3.5 text-purple-600" />
-          Milestones & Experience
-        </div>
+          Milestones &amp; Experience
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           Practical <span className="text-purple-600">Impact</span>
         </h2>
@@ -44,7 +39,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
         <div className="lg:col-span-7 space-y-6">
           <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4">
             <Briefcase className="w-5 h-5 text-sky-600" />
-            Industry & Open Source Roles
+            Industry &amp; Open Source Roles
           </h3>
 
           <div className="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-slate-200">
@@ -55,8 +50,8 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
                 <div className={`p-6 rounded-3xl border-2 ${getAccent(exp.accent)} shadow-xs hover:shadow-sm transition-all`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h4 className="text-lg font-bold text-slate-900">{exp.role}</h4>
-                    <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-white/90 text-slate-700 border border-slate-200 flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-slate-400" />
+                    <span className="text-xs font-mono font-medium text-slate-600 flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
                       {exp.period}
                     </span>
                   </div>
@@ -79,16 +74,9 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
                     ))}
                   </ul>
 
-                  <div className="mt-4 pt-3 border-t border-slate-200/60 flex flex-wrap gap-1.5">
-                    {exp.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-white text-slate-700 border border-slate-200"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="mt-4 pt-3 border-t border-slate-200/60 text-xs font-mono text-slate-600 leading-relaxed">
+                    Tech: {exp.skills.join(' • ')}
+                  </p>
                 </div>
               </div>
             ))}
@@ -99,7 +87,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experien
         <div className="lg:col-span-5 space-y-4">
           <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2 mb-4">
             <Trophy className="w-5 h-5 text-amber-500" />
-            Honors & Achievements
+            Honors &amp; Achievements
           </h3>
 
           <div className="space-y-4">

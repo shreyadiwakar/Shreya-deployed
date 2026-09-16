@@ -1,16 +1,10 @@
 import React from 'react';
 import { X, ExternalLink, Github, CheckCircle, Cpu, Zap, ArrowRight } from 'lucide-react';
-import { Project } from '../types';
 
-interface ProjectDetailModalProps {
-  project: Project | null;
-  onClose: () => void;
-}
-
-export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClose }) => {
+export const ProjectDetailModal = ({ project, onClose }) => {
   if (!project) return null;
 
-  const getAccentStyles = (accent: Project['accentColor']) => {
+  const getAccentStyles = (accent) => {
     switch (accent) {
       case 'yellow':
         return {
@@ -97,7 +91,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
           <div className="mt-6 p-4 rounded-2xl bg-white/90 border border-slate-200 shadow-xs">
             <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold mb-3 flex items-center gap-2">
               <Cpu className="w-4 h-4 text-sky-500" />
-              Architectural & Engineering Solves
+              Architectural &amp; Engineering Solves
             </h4>
             <ul className="space-y-2">
               {project.architectureHighlights.map((highlight, idx) => (
@@ -113,7 +107,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project,
         {/* Tech Stack Chips */}
         <div className="mt-6">
           <h4 className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold mb-2">
-            Technologies & Frameworks
+            Technologies &amp; Frameworks
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.techStack.map((tech) => (

@@ -2,14 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Play, Pause, RotateCcw, Volume2, VolumeX, Keyboard as KeyboardIcon, CheckCircle2, Trophy, Gauge } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-interface KeyDef {
-  code: string;
-  label: string;
-  shiftLabel?: string;
-  width?: string;
-}
-
-const KEYBOARD_ROWS: KeyDef[][] = [
+const KEYBOARD_ROWS = [
   // Row 1: Numbers & Backspace
   [
     { code: 'Backquote', label: '`', shiftLabel: '~' },
@@ -87,63 +80,62 @@ const KEYBOARD_ROWS: KeyDef[][] = [
   ],
 ];
 
-interface DataPreset {
-  id: string;
-  name: string;
-  category: string;
-  text: string;
-  description: string;
-}
-
-const DATA_PRESETS: DataPreset[] = [
+const DATA_PRESETS = [
   {
     id: 'dtu-record',
     name: 'DTU Student Record',
     category: 'Academics',
-    text: 'SHREYA DIWAKAR | DTU CSE | ROLL: 24/CS/425 | GROUP G-2 | B.TECH CS 2024-2028',
-    description: 'Academic roll and department verification data at Delhi Technological University.',
+    text: 'SHREYA DIWAKAR | DTU CSE 24/CS/425 | CGPA: 8.234 | DELHI TECHNOLOGICAL UNIVERSITY',
+    description: 'Academic credentials and department verification at Delhi Technological University (formerly DCE).',
   },
   {
-    id: 'compiler-automata',
-    name: 'Automata & Compiler Lab',
-    category: 'Compilers',
-    text: 'NFA_TO_DFA: delta(q0, a) = {q1, q2}; LEX_STRIP_COMMENTS(/* clean */);',
-    description: 'Subset construction transition function and LEX comment stripping streams.',
+    id: 'cdot-internship',
+    name: 'C-DOT Software Internship',
+    category: 'Experience',
+    text: 'C-DOT DELHI: PLAYWRIGHT E2E + AI TEST AGENTS + DOCKER COMPOSE CONTAINERIZATION',
+    description: 'Automated end-to-end testing, AI test agents (Planner, Generator, Healer), and full-stack containerization.',
   },
   {
-    id: 'creative-palette',
-    name: 'Painting Studio Palette',
-    category: 'Art',
-    text: 'PALETTE: SAKURA PINK #F472B6 + SKY BLUE #38BDF8 + LINSEED OIL WASH',
-    description: 'Fine art color mixtures and watercolor wash physics formulations.',
+    id: 'social-media-app',
+    name: 'Full-Stack Social Platform',
+    category: 'Projects',
+    text: 'REACT.JS + NODE.JS + EXPRESS.JS + MYSQL + BCRYPTJS PASSWORD HASHING',
+    description: 'Full-stack social media application with profiles, posts, comments, likes, and relational schemas.',
+  },
+  {
+    id: 'cpp-elearning',
+    name: 'C++ Console E-Learning',
+    category: 'Systems',
+    text: 'CPP OOP + STL: ROLE-BASED COURSES, QUIZZES, ASSIGNMENTS & FILE HANDLING',
+    description: 'Object-oriented console e-learning platform with student and instructor workflows.',
   },
 ];
 
-export const InteractiveDataKeyboard: React.FC = () => {
-  const [selectedPreset, setSelectedPreset] = useState<DataPreset>(DATA_PRESETS[0]);
-  const [autoPlay, setAutoPlay] = useState<boolean>(true);
-  const [typedIndex, setTypedIndex] = useState<number>(0);
-  const [activeKeyCode, setActiveKeyCode] = useState<string | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
-  const [typingSpeedMs, setTypingSpeedMs] = useState<number>(120);
+export const InteractiveDataKeyboard = () => {
+  const [selectedPreset, setSelectedPreset] = useState(DATA_PRESETS[0]);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [typedIndex, setTypedIndex] = useState(0);
+  const [activeKeyCode, setActiveKeyCode] = useState(null);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [typingSpeedMs, setTypingSpeedMs] = useState(120);
 
   // Interactive Typing Test Mode State
-  const [isTestMode, setIsTestMode] = useState<boolean>(false);
-  const [testInput, setTestInput] = useState<string>('');
-  const [testStartTime, setTestStartTime] = useState<number | null>(null);
-  const [testWpm, setTestWpm] = useState<number>(0);
-  const [testAccuracy, setTestAccuracy] = useState<number>(100);
-  const [testFinished, setTestFinished] = useState<boolean>(false);
+  const [isTestMode, setIsTestMode] = useState(false);
+  const [testInput, setTestInput] = useState('');
+  const [testStartTime, setTestStartTime] = useState(null);
+  const [testWpm, setTestWpm] = useState(0);
+  const [testAccuracy, setTestAccuracy] = useState(100);
+  const [testFinished, setTestFinished] = useState(false);
 
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const audioCtxRef = useRef(null);
+  const containerRef = useRef(null);
 
   // Play synthetic mechanical click tone
   const playMechanicalClick = useCallback(() => {
     if (!soundEnabled) return;
     try {
       if (!audioCtxRef.current) {
-        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
         audioCtxRef.current = new AudioCtx();
       }
       const ctx = audioCtxRef.current;
@@ -171,7 +163,7 @@ export const InteractiveDataKeyboard: React.FC = () => {
   }, [soundEnabled]);
 
   // Helper to map a character to key code
-  const charToKeyCode = (ch: string): string => {
+  const charToKeyCode = (ch) => {
     const upper = ch.toUpperCase();
     if (upper >= 'A' && upper <= 'Z') return `Key${upper}`;
     if (ch >= '0' && ch <= '9') return `Digit${ch}`;
@@ -219,7 +211,7 @@ export const InteractiveDataKeyboard: React.FC = () => {
   }, [autoPlay, isTestMode, selectedPreset, typingSpeedMs, playMechanicalClick]);
 
   // Handle Interactive Typing Test Input
-  const handleTestKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTestKeyDown = (e) => {
     if (!isTestMode || testFinished) return;
 
     const code = e.code;
@@ -232,7 +224,7 @@ export const InteractiveDataKeyboard: React.FC = () => {
     }
   };
 
-  const handleTestChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTestChange = (e) => {
     const val = e.target.value;
     const target = selectedPreset.text;
     setTestInput(val);
@@ -287,10 +279,10 @@ export const InteractiveDataKeyboard: React.FC = () => {
     >
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-semibold uppercase tracking-wider mb-3 border border-slate-200">
-          <KeyboardIcon className="w-3.5 h-3.5 text-slate-700" />
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <KeyboardIcon className="w-3.5 h-3.5 text-slate-600" />
           Interactive Data Architecture
-        </div>
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           Physical <span className="text-sky-600">Keyboard</span> Data Stream
         </h2>
@@ -308,11 +300,10 @@ export const InteractiveDataKeyboard: React.FC = () => {
                 setSelectedPreset(preset);
                 restartTyping();
               }}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border ${
-                selectedPreset.id === preset.id
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border ${selectedPreset.id === preset.id
                   ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
                   : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-              }`}
+                }`}
             >
               {preset.name}
             </button>
@@ -324,11 +315,10 @@ export const InteractiveDataKeyboard: React.FC = () => {
               setIsTestMode(!isTestMode);
               restartTyping();
             }}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border flex items-center gap-1.5 ${
-              isTestMode
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border flex items-center gap-1.5 ${isTestMode
                 ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                 : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border-emerald-300'
-            }`}
+              }`}
           >
             <Gauge className="w-3.5 h-3.5" />
             {isTestMode ? 'Exit Typing Test' : 'Test Your Speed'}
@@ -473,11 +463,10 @@ export const InteractiveDataKeyboard: React.FC = () => {
                         playMechanicalClick();
                         setTimeout(() => setActiveKeyCode(null), 100);
                       }}
-                      className={`h-9 sm:h-11 ${customWidth} rounded-lg flex flex-col items-center justify-center text-[10px] sm:text-xs font-mono font-bold select-none transition-all duration-75 relative ${
-                        isPressed
+                      className={`h-9 sm:h-11 ${customWidth} rounded-lg flex flex-col items-center justify-center text-[10px] sm:text-xs font-mono font-bold select-none transition-all duration-75 relative ${isPressed
                           ? 'bg-sky-400 text-slate-950 translate-y-[3px] shadow-none border-b border-sky-300'
                           : 'bg-slate-200 hover:bg-white text-slate-800 border-b-[3.5px] border-slate-400 shadow-xs active:translate-y-[3px] active:border-b active:shadow-none'
-                      }`}
+                        }`}
                       title={k.label}
                     >
                       {k.shiftLabel && (

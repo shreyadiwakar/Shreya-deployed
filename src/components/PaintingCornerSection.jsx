@@ -39,13 +39,13 @@ const PRESET_ARTWORKS = [
   },
 ];
 
-export const PaintingCornerSection: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+export const PaintingCornerSection = () => {
+  const canvasRef = useRef(null);
   const [selectedColor, setSelectedColor] = useState('#f472b6');
   const [brushSize, setBrushSize] = useState(8);
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeCount, setStrokeCount] = useState(0);
-  const [activeTab, setActiveTab] = useState<'canvas' | 'gallery'>('canvas');
+  const [activeTab, setActiveTab] = useState('canvas');
 
   // Initialize canvas with clean white background
   const clearCanvas = () => {
@@ -68,19 +68,19 @@ export const PaintingCornerSection: React.FC = () => {
     clearCanvas();
   }, []);
 
-  const getCanvasCoords = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const getCanvasCoords = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
     return {
       x: (clientX - rect.left) * (canvas.width / rect.width),
       y: (clientY - rect.top) * (canvas.height / rect.height),
     };
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -99,7 +99,7 @@ export const PaintingCornerSection: React.FC = () => {
     setStrokeCount((prev) => prev + 1);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const draw = (e) => {
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -144,10 +144,10 @@ export const PaintingCornerSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-semibold mb-3">
+          <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
             <Palette className="w-3.5 h-3.5 text-pink-500" />
-            <span>Personal Passion • &quot;My hobby is painting&quot;</span>
-          </div>
+            <span>Personal Passion • Creative Expression</span>
+          </p>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             Creative Art Corner &amp; Pastel Studio
           </h2>

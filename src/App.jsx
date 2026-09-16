@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NeonCursor } from './components/NeonCursor';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -24,12 +24,11 @@ import {
   educationData,
   experienceData,
 } from './data/portfolioData';
-import { ProfileData, Project } from './types';
 
 export default function App() {
   // Load saved profile or fallback
-  const [profile, setProfile] = useState<ProfileData>(() => {
-    const saved = localStorage.getItem('shreya_portfolio_profile');
+  const [profile, setProfile] = useState(() => {
+    const saved = localStorage.getItem('shreya_portfolio_profile_v2');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -40,8 +39,8 @@ export default function App() {
     return initialProfile;
   });
 
-  const [projects, setProjects] = useState<Project[]>(() => {
-    const saved = localStorage.getItem('shreya_portfolio_projects');
+  const [projects, setProjects] = useState(() => {
+    const saved = localStorage.getItem('shreya_portfolio_projects_v2');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -57,14 +56,16 @@ export default function App() {
   const [neonCursorEnabled, setNeonCursorEnabled] = useState(true);
   const [repelForceMultiplier, setRepelForceMultiplier] = useState(1.0);
 
-  const handleSaveProfile = (updated: ProfileData) => {
+  const handleSaveProfile = (updated) => {
     setProfile(updated);
-    localStorage.setItem('shreya_portfolio_profile', JSON.stringify(updated));
+    localStorage.setItem('shreya_portfolio_profile_v2', JSON.stringify(updated));
   };
 
   const handleResetProfile = () => {
     setProfile(initialProfile);
     setProjects(initialProjects);
+    localStorage.removeItem('shreya_portfolio_profile_v2');
+    localStorage.removeItem('shreya_portfolio_projects_v2');
     localStorage.removeItem('shreya_portfolio_profile');
     localStorage.removeItem('shreya_portfolio_projects');
   };

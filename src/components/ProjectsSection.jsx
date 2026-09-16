@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ExternalLink, Github, ZoomIn, Sparkles, Filter, Code2, ArrowUpRight } from 'lucide-react';
-import { Project } from '../types';
 import { ProjectDetailModal } from './ProjectDetailModal';
 
-interface ProjectsSectionProps {
-  projects: Project[];
-}
+export const ProjectsSection = ({ projects }) => {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [activeProjectModal, setActiveProjectModal] = useState(null);
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [activeProjectModal, setActiveProjectModal] = useState<Project | null>(null);
-
-  const categories = ['All', 'Compiler & Systems', 'Full-Stack', 'Systems & AI', 'Creative & Art', 'Dev Tools'];
+  const categories = ['All', 'Full-Stack', 'Systems & C++', 'Web Application'];
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
     : projects.filter((p) => p.category === selectedCategory);
 
-  const getSoftTheme = (accent: Project['accentColor']) => {
+  const getSoftTheme = (accent) => {
     switch (accent) {
       case 'yellow':
         return {
@@ -68,10 +63,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
     <section id="projects-gallery" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-900 text-xs font-semibold uppercase tracking-wider mb-3">
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
           <Sparkles className="w-3.5 h-3.5 text-sky-600" />
           Zoom-On-Scroll Showcase
-        </div>
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           Featured <span className="text-pink-600">Projects</span>
         </h2>
@@ -85,11 +80,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
-                selectedCategory === cat
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${selectedCategory === cat
                   ? 'bg-slate-900 text-white shadow-xs'
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-              }`}
+                }`}
             >
               {cat === 'All' && <Filter className="w-3.5 h-3.5 text-slate-400" />}
               {cat}
@@ -121,10 +115,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
               }}
               className={`group relative rounded-xl border ${theme.border} ${theme.cardBg} p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden`}
             >
-              {/* Header Badges */}
+              {/* Header Details */}
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`px-2.5 py-0.5 rounded-md text-xs font-bold font-mono border ${theme.badge}`}>
+                  <span className="text-xs font-bold font-mono text-slate-700 uppercase tracking-wide">
                     {project.category}
                   </span>
                   <button
@@ -144,32 +138,20 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   {project.description}
                 </p>
 
-                {/* Key Metrics Pill */}
+                {/* Key Metrics Text */}
                 {project.metrics && (
-                  <div className="mt-3 px-3 py-1.5 rounded-lg bg-white/90 border border-slate-200/80 text-[11px] font-mono text-slate-700 flex items-center gap-1.5 shadow-2xs">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                  <p className="mt-3 text-xs font-mono text-slate-600 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                     <span className="truncate">{project.metrics}</span>
-                  </div>
+                  </p>
                 )}
               </div>
 
               {/* Bottom Footer: Tech Chips & Actions */}
               <div className="mt-5 pt-4 border-t border-slate-200/70">
-                <div className="flex flex-wrap gap-1.5 mb-3.5">
-                  {project.techStack.slice(0, 4).map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-white text-slate-700 border border-slate-200"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.techStack.length > 4 && (
-                    <span className="px-1.5 py-0.5 text-[11px] font-mono text-slate-500">
-                      +{project.techStack.length - 4}
-                    </span>
-                  )}
-                </div>
+                <p className="text-xs font-mono text-slate-600 mb-3.5 leading-relaxed">
+                  {project.techStack.join(' • ')}
+                </p>
 
                 <div className="flex items-center justify-between gap-2">
                   <a

@@ -1,20 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Layers, Sliders, Heart, GraduationCap, Cpu, Sparkles, ChevronRight, CheckCircle2, Shield, Laptop } from 'lucide-react';
-import { ProfileData, EducationItem, SkillCategory } from '../types';
 
-interface UnfoldingBentoSectionProps {
-  profile: ProfileData;
-  education: EducationItem[];
-  skills: SkillCategory[];
-}
-
-export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
+export const UnfoldingBentoSection = ({
   profile,
   education,
 }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [manualProgress, setManualProgress] = useState<number | null>(null);
+  const containerRef = useRef(null);
+  const [manualProgress, setManualProgress] = useState(null);
   const [isManualMode, setIsManualMode] = useState(false);
 
   // Track scroll through the container
@@ -55,10 +48,10 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
     >
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-semibold uppercase tracking-wider mb-3 border border-slate-200">
-          <Layers className="w-3.5 h-3.5 text-slate-700" />
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <Layers className="w-3.5 h-3.5 text-slate-600" />
           Modular Architecture
-        </div>
+        </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           The <span className="text-sky-600">Unfolding</span> Pillars
         </h2>
@@ -141,14 +134,13 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
               scale: 1 - p * 0.08,
             }}
             transition={{ duration: 0.15 }}
-            className={`absolute z-20 w-full max-w-md p-7 rounded-xl bg-white border border-slate-300 shadow-lg text-center flex flex-col items-center justify-center transition-all ${
-              isFolded ? 'pointer-events-auto' : 'pointer-events-none'
-            }`}
+            className={`absolute z-20 w-full max-w-md p-7 rounded-xl bg-white border border-slate-300 shadow-lg text-center flex flex-col items-center justify-center transition-all ${isFolded ? 'pointer-events-auto' : 'pointer-events-none'
+              }`}
           >
             <div className="w-12 h-12 rounded-lg bg-slate-900 text-white font-mono font-bold text-base flex items-center justify-center mb-3">
               SD
             </div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-md border border-slate-200 mb-2">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 mb-2">
               Single Unified Identity
             </span>
             <h3 className="text-xl font-bold text-slate-900">
@@ -158,7 +150,7 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
               All academic, compiler, and artistic pillars condensed into this single card.
               Scroll to unfold inside this device.
             </p>
-            <div className="mt-4 flex items-center gap-1.5 text-xs font-medium text-slate-700 bg-slate-100 px-3 py-1 rounded-md border border-slate-200">
+            <div className="mt-4 flex items-center gap-1.5 text-xs font-medium text-slate-600">
               <span>Scroll down to unpack</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </div>
@@ -179,8 +171,8 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-pink-50 text-pink-800 text-xs font-mono font-semibold border border-pink-200">
-                    <Heart className="w-3 h-3 text-pink-600" />
+                  <span className="inline-flex items-center gap-1.5 text-pink-700 text-xs font-mono font-semibold">
+                    <Heart className="w-3.5 h-3.5 text-pink-600" />
                     PILLAR 01 // BIO &amp; VALUES
                   </span>
                   <span className="text-[11px] font-mono text-slate-500">
@@ -195,23 +187,18 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
                 </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                  Systems Thinker
-                </span>
-                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                  Compiler Explorer
-                </span>
-                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                  Visual Artist
-                </span>
-                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
-                  Clean Architecture
-                </span>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-mono text-slate-600">
+                <span className="text-sky-700 font-semibold">C-DOT Software Intern</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-purple-700 font-semibold">Full-Stack Dev</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-slate-700 font-semibold">DTU CSE '28</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-emerald-700 font-semibold">Playwright E2E &amp; Docker</span>
               </div>
             </motion.div>
 
-            {/* BOX 2: DTU Academics (Top Right) */}
+            {/* BOX 2: Academic Journey - DTU & Schools (Top Right) */}
             <motion.div
               style={{
                 x: (1 - p) * -80,
@@ -224,38 +211,54 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-50 text-sky-800 text-xs font-mono font-semibold border border-sky-200">
-                    <GraduationCap className="w-3 h-3 text-sky-600" />
-                    PILLAR 02 // DTU ACADEMICS
+                  <span className="inline-flex items-center gap-1.5 text-sky-700 text-xs font-mono font-semibold">
+                    <GraduationCap className="w-3.5 h-3.5 text-sky-600" />
+                    PILLAR 02 // ACADEMIC RECORD
                   </span>
-                  <span className="text-[11px] font-mono text-sky-800 bg-sky-100 px-2 py-0.5 rounded">
-                    {education[0]?.gradeOrGpa}
+                  <span className="text-xs font-mono text-sky-800 font-bold">
+                    8.234 CGPA
                   </span>
                 </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  {education[0]?.degree}
-                </h3>
-                <p className="text-xs text-slate-600 font-medium mt-0.5">
-                  {education[0]?.institution}
-                </p>
-                <p className="text-[11px] font-mono text-slate-500 mt-0.5">
-                  Roll: {education[0]?.rollNo}
-                </p>
 
-                <div className="mt-3">
-                  <p className="text-[11px] font-mono uppercase text-slate-500 mb-1">
-                    Featured Coursework:
-                  </p>
-                  <div className="flex flex-wrap gap-1">
-                    {education[0]?.coursework.slice(0, 3).map((course, i) => (
-                      <span
-                        key={i}
-                        className="text-[11px] font-mono bg-slate-50 text-slate-700 px-2 py-0.5 rounded border border-slate-200"
-                      >
-                        {course}
-                      </span>
-                    ))}
+                {/* Primary Degree: DTU */}
+                <div className="mb-2">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">
+                        B. Tech CSE • DTU
+                      </h3>
+                      <p className="text-xs text-slate-600 font-medium">
+                        Delhi Technological University (formerly DCE)
+                      </p>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-sky-700">
+                      2024-28
+                    </span>
                   </div>
+                  <p className="text-xs font-mono text-slate-500 mt-0.5">
+                    Roll: 24/CS/425 • CGPA: 8.234
+                  </p>
+                </div>
+
+                {/* Schooling Entries from Resume */}
+                <div className="space-y-1.5 text-xs pt-2 border-t border-slate-100">
+                  <div className="flex items-center justify-between text-slate-800">
+                    <span>Class XII (CBSE) — C. R. Oasis Convent (2024)</span>
+                    <span className="text-emerald-700 font-mono font-bold">90.4%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-800">
+                    <span>Class X (CBSE) — St. Francis School (2022)</span>
+                    <span className="text-emerald-700 font-mono font-bold">96.8%</span>
+                  </div>
+                </div>
+
+                <div className="mt-3 pt-2 border-t border-slate-100">
+                  <p className="text-[11px] font-mono uppercase text-slate-500 mb-1">
+                    Core Coursework:
+                  </p>
+                  <p className="text-xs font-mono text-slate-700 leading-relaxed">
+                    DSA • OOP • OS • DBMS • Networks • Architecture • Software Engg
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -273,45 +276,38 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 text-xs font-mono font-semibold border border-emerald-200">
-                    <Cpu className="w-3 h-3 text-emerald-600" />
+                  <span className="inline-flex items-center gap-1.5 text-emerald-700 text-xs font-mono font-semibold">
+                    <Cpu className="w-3.5 h-3.5 text-emerald-600" />
                     PILLAR 03 // SYSTEMS ARSENAL
                   </span>
-                  <span className="text-[11px] font-mono text-emerald-700">
-                    C++ / Web / LEX
+                  <span className="text-xs font-mono text-emerald-700">
+                    C++ / Web / Docker
                   </span>
                 </div>
                 <h3 className="text-base font-bold text-slate-900">
-                  Polyglot &amp; Formal Parsers
+                  Full-Stack &amp; Test Engineering
                 </h3>
 
-                <div className="mt-2.5 space-y-2 text-xs">
+                <div className="mt-3 space-y-2.5 text-xs">
                   <div>
-                    <span className="text-[11px] font-mono text-slate-500 block mb-0.5">Languages:</span>
-                    <div className="flex flex-wrap gap-1">
-                      {['C / C++', 'LEX & Flex', 'TypeScript', 'Python', 'SQL'].map((t) => (
-                        <span key={t} className="font-mono bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 text-slate-800">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase block mb-0.5">Programming Languages:</span>
+                    <p className="font-mono text-slate-800">C • C++ • JavaScript • Python</p>
                   </div>
 
                   <div>
-                    <span className="text-[11px] font-mono text-slate-500 block mb-0.5">Systems &amp; Frameworks:</span>
-                    <div className="flex flex-wrap gap-1">
-                      {['React 19', 'Next.js', 'Node.js', 'Linux CLI', 'Canvas 2D'].map((t) => (
-                        <span key={t} className="font-mono bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 text-slate-800">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase block mb-0.5">Web &amp; Databases:</span>
+                    <p className="font-mono text-slate-800">React.js • Node.js • REST APIs • SQL (MySQL) • MongoDB</p>
+                  </div>
+
+                  <div>
+                    <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase block mb-0.5">DevOps &amp; Testing:</span>
+                    <p className="font-mono text-slate-800">Docker • Docker Compose • Playwright E2E • Git • GitHub • Figma</p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* BOX 4: Guiding Philosophy (Bottom Right) */}
+            {/* BOX 4: Guiding Philosophy & Impact (Bottom Right) */}
             <motion.div
               style={{
                 x: (1 - p) * -80,
@@ -324,36 +320,36 @@ export const UnfoldingBentoSection: React.FC<UnfoldingBentoSectionProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-50 text-amber-800 text-xs font-mono font-semibold border border-amber-200">
-                    <Sparkles className="w-3 h-3 text-amber-600" />
-                    PILLAR 04 // ENGINEERING CREED
+                  <span className="inline-flex items-center gap-1.5 text-amber-700 text-xs font-mono font-semibold">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    PILLAR 04 // EXPERIENCE &amp; IMPACT
                   </span>
-                  <span className="text-[11px] font-mono text-slate-500">
-                    Core Tenets
+                  <span className="text-xs font-mono text-slate-500">
+                    Key Highlights
                   </span>
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
-                  "{profile.philosophy}"
+                  C-DOT Software Engineering &amp; Sponsogram Leadership
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                  <div className="text-xs">
                     <div className="flex items-center gap-1 text-slate-800 font-bold font-mono">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                      Complexity Rigor
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      C-DOT E2E Automation
                     </div>
-                    <p className="text-[11px] text-slate-600 mt-0.5">
-                      Evaluating asymptotic bounds O(n) and state closures.
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Playwright E2E suites with AI Agents (Planner, Generator, Healer) &amp; Docker multi-container deployment.
                     </p>
                   </div>
 
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+                  <div className="text-xs">
                     <div className="flex items-center gap-1 text-slate-800 font-bold font-mono">
-                      <Shield className="w-3 h-3 text-sky-600" />
-                      Deterministic Craft
+                      <Shield className="w-3.5 h-3.5 text-sky-600" />
+                      Sponsogram &amp; Mentorship
                     </div>
-                    <p className="text-[11px] text-slate-600 mt-0.5">
-                      Deterministic finite states with zero unhandled transitions.
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Core Tech &amp; Content Manager at startup; 30+ hrs career guidance &amp; Coursera ML Specialization.
                     </p>
                   </div>
                 </div>

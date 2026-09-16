@@ -1,22 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon, Play, CornerDownLeft, Sparkles, Copy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { ProfileData, Project } from '../types';
 
-interface InteractiveTerminalProps {
-  profile: ProfileData;
-  projects: Project[];
-}
-
-interface CommandLog {
-  id: string;
-  command: string;
-  output: React.ReactNode;
-}
-
-export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profile, projects }) => {
+export const InteractiveTerminal = ({ profile, projects }) => {
   const [inputVal, setInputVal] = useState('');
-  const [logs, setLogs] = useState<CommandLog[]>([
+  const [logs, setLogs] = useState([
     {
       id: 'init-1',
       command: 'shreya --init',
@@ -33,17 +21,17 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
     },
   ]);
 
-  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [logs]);
 
-  const handleCommand = (cmdText: string) => {
+  const handleCommand = (cmdText) => {
     const trimmed = cmdText.trim().toLowerCase();
     if (!trimmed) return;
 
-    let output: React.ReactNode;
+    let output;
 
     switch (trimmed) {
       case 'help':
@@ -51,13 +39,13 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
           <div className="text-xs sm:text-sm text-slate-700 space-y-1">
             <p className="font-semibold text-slate-900">Available commands:</p>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-xs">
-              <div><span className="text-pink-600 font-bold">about</span> - Background & bio</div>
-              <div><span className="text-sky-600 font-bold">dtu</span> - Delhi Tech Univ academic record</div>
+              <div><span className="text-pink-600 font-bold">about</span> - Background &amp; bio</div>
+              <div><span className="text-sky-600 font-bold">dtu</span> - DTU &amp; Education Record</div>
+              <div><span className="text-purple-600 font-bold">experience</span> - C-DOT &amp; Sponsogram</div>
               <div><span className="text-emerald-600 font-bold">skills</span> - Technical capabilities</div>
-              <div><span className="text-amber-600 font-bold">projects</span> - Showcase of builds</div>
-              <div><span className="text-purple-600 font-bold">paint</span> - Creative painting studio</div>
-              <div><span className="text-rose-600 font-bold">cat</span> - Sleepy companion dialogue</div>
-              <div><span className="text-blue-600 font-bold">contact</span> - Email & socials</div>
+              <div><span className="text-amber-600 font-bold">projects</span> - Showcase of 3 builds</div>
+              <div><span className="text-rose-600 font-bold">contact</span> - Phone, Email &amp; Socials</div>
+              <div><span className="text-blue-600 font-bold">paint</span> - Painting studio hobby</div>
               <div><span className="text-slate-600 font-bold">clear</span> - Clear terminal window</div>
             </div>
           </div>
@@ -65,12 +53,32 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
         break;
 
       case 'dtu':
+      case 'education':
         output = (
-          <div className="text-xs sm:text-sm text-slate-700 space-y-1 bg-sky-50/80 p-2.5 rounded-lg border border-sky-200">
-            <p className="font-bold text-sky-900">Delhi Technological University (DTU)</p>
-            <p className="text-slate-700 font-mono text-xs">Department: Computer Science &amp; Engineering</p>
-            <p className="text-slate-700 font-mono text-xs">Student Roll No: 24/CS/425 • Section/Group: G-2</p>
-            <p className="text-slate-700 font-mono text-xs">Course Focus: Compiler Construction (CS 301), Automata &amp; Formal Languages</p>
+          <div className="text-xs sm:text-sm text-slate-700 space-y-1.5 bg-sky-50/80 p-3 rounded-lg border border-sky-200">
+            <p className="font-bold text-sky-900">Academic Credentials (Shreya Diwakar):</p>
+            <div className="text-slate-700 font-mono text-xs space-y-1">
+              <p>• <strong>B. Tech CSE</strong>: Delhi Technological University (DTU, formerly DCE) | 2024-28 | <strong>CGPA: 8.234</strong> | Roll: 24/CS/425</p>
+              <p>• <strong>Class XII (AISSCE)</strong>: CBSE | C. R. Oasis Convent School | 2024 | <strong>90.4%</strong></p>
+              <p>• <strong>Class X (AISSCE)</strong>: CBSE | St. Francis School | 2022 | <strong>96.8%</strong></p>
+            </div>
+          </div>
+        );
+        break;
+
+      case 'experience':
+      case 'internships':
+        output = (
+          <div className="text-xs sm:text-sm text-slate-700 space-y-1.5 bg-purple-50/80 p-3 rounded-lg border border-purple-200 font-mono text-xs">
+            <p className="font-bold text-purple-900 font-sans text-sm">Internship History:</p>
+            <p className="text-slate-800">
+              [1] <strong>Centre for Development of Telematics (C-DOT)</strong> — Software Intern (June 2026 - July 2026)<br />
+              &gt; Automated Playwright E2E suites with AI Test Agents (Planner, Generator, Healer); Docker Compose multi-container deployment; Antigravity IDE.
+            </p>
+            <p className="text-slate-800">
+              [2] <strong>Sponsogram</strong> — Content and Video Editing Intern (Feb 2026 - April 2026)<br />
+              &gt; Core Technical Team &amp; Content Manager; video production, influencer-brand collaborations.
+            </p>
           </div>
         );
         break;
@@ -80,7 +88,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
           <div className="text-xs sm:text-sm text-slate-700 space-y-1 bg-pink-50/80 p-2.5 rounded-lg border border-pink-200">
             <p className="font-bold text-pink-900">Personal Passion: Painting</p>
             <p className="text-slate-700 text-xs leading-relaxed">
-              &quot;My hobby is painting&quot; — working primarily in soft digital watercolor, acrylic wash, and gouache. Blending visual aesthetic balance with algorithmic architecture.
+              &quot;My hobby is painting&quot; — working in digital watercolor, acrylic wash, and gouache. Harmonizing visual aesthetic depth with clean algorithmic engineering.
             </p>
           </div>
         );
@@ -96,7 +104,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
         output = (
           <div className="text-xs sm:text-sm text-amber-900 space-y-1 bg-amber-50/80 p-2.5 rounded-lg border border-amber-200 font-mono">
             <p className="font-bold">Sleepy Cat: [walking along screen]</p>
-            <p>&quot;Purrrr! Walking along with Shreya at DTU... Zzz... dreaming of clean regex tokens!&quot;</p>
+            <p>&quot;Purrrr! Walking along with Shreya at DTU... Zzz... dreaming of clean code &amp; smooth animations!&quot;</p>
           </div>
         );
         break;
@@ -104,8 +112,8 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
       case 'about':
         output = (
           <div className="text-xs sm:text-sm text-slate-700 space-y-1">
-            <p className="font-bold text-slate-900">{profile.name}</p>
-            <p className="text-sky-700 font-mono text-xs">{profile.title}</p>
+            <p className="font-bold text-slate-900">{profile.name} (Roll: 24/CS/425)</p>
+            <p className="text-sky-700 font-mono text-xs">{profile.title} | DTU (formerly DCE)</p>
             <p className="mt-1 leading-relaxed">{profile.bio}</p>
           </div>
         );
@@ -114,12 +122,13 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
       case 'skills':
         output = (
           <div className="text-xs sm:text-sm text-slate-700 space-y-1">
-            <p className="font-bold text-slate-900">Technical Arsenal:</p>
-            <p className="text-xs font-mono text-slate-600">
-              Languages: TypeScript, Python, C++, Java, JavaScript, SQL<br />
-              Frontend: React 19, Tailwind CSS, Motion, HTML5 Canvas<br />
-              Backend: Node.js, Express, Redis, PostgreSQL, WebSockets<br />
-              DevOps: Docker, Git, Linux, GitHub Actions
+            <p className="font-bold text-slate-900">Resume Technical Arsenal:</p>
+            <p className="text-xs font-mono text-slate-600 leading-relaxed">
+              • <strong>Languages</strong>: C, C++, JavaScript, Python<br />
+              • <strong>Web Dev</strong>: HTML, CSS, React.js, Node.js, REST APIs<br />
+              • <strong>Databases</strong>: SQL (MySQL), MongoDB<br />
+              • <strong>Tools</strong>: Git, GitHub, Docker, Playwright, Docker Compose, Figma<br />
+              • <strong>Concepts</strong>: OOP, DSA, Operating Systems, DBMS, Computer Networks, Software Engineering, Computer Architecture
             </p>
           </div>
         );
@@ -127,11 +136,13 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
 
       case 'projects':
         output = (
-          <div className="text-xs sm:text-sm text-slate-700 space-y-1.5">
-            <p className="font-bold text-slate-900">Featured Builds:</p>
+          <div className="text-xs sm:text-sm text-slate-700 space-y-2">
+            <p className="font-bold text-slate-900">Official Resume Projects:</p>
             {projects.map((p, idx) => (
-              <div key={p.id} className="text-xs font-mono">
-                <span className="text-pink-600">[{idx + 1}]</span> <strong>{p.title}</strong> — {p.tagline}
+              <div key={p.id} className="text-xs font-mono bg-slate-50 p-2 rounded border border-slate-200">
+                <span className="text-pink-600 font-bold">[{idx + 1}] {p.title}</span> ({p.date || 'Active'})<br />
+                <span className="text-slate-600">{p.description}</span><br />
+                <span className="text-sky-700 font-semibold">Tech: {p.techStack.join(', ')}</span>
               </div>
             ))}
           </div>
@@ -140,10 +151,12 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
 
       case 'contact':
         output = (
-          <div className="text-xs sm:text-sm text-slate-700 space-y-1 font-mono">
-            <p>Email: <span className="text-pink-600">{profile.email}</span></p>
+          <div className="text-xs sm:text-sm text-slate-700 space-y-1 font-mono bg-pink-50/60 p-2.5 rounded-lg border border-pink-200">
+            <p>Email: <span className="text-pink-600 font-bold">{profile.email}</span></p>
+            <p>Phone: <span className="text-emerald-700 font-bold">{profile.phone || '+91-8851493754'}</span></p>
             <p>GitHub: <a href={profile.github} target="_blank" rel="noreferrer" className="text-sky-600 underline">{profile.github}</a></p>
             <p>LinkedIn: <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-sky-600 underline">{profile.linkedin}</a></p>
+            <p>LeetCode: <a href={profile.leetcode} target="_blank" rel="noreferrer" className="text-amber-600 underline">{profile.leetcode}</a></p>
           </div>
         );
         break;
@@ -196,7 +209,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
     setInputVal('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     handleCommand(inputVal);
   };
@@ -204,10 +217,10 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({ profil
   return (
     <section id="terminal-section" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto z-10">
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-2">
-          <TerminalIcon className="w-3.5 h-3.5 text-amber-600" />
+        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <TerminalIcon className="w-3.5 h-3.5 text-slate-600" />
           Interactive CS Terminal
-        </div>
+        </p>
         <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
           CLI <span className="text-amber-600">Playground</span>
         </h2>
