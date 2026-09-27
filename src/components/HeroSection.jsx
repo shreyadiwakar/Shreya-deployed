@@ -1,211 +1,186 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowDown, Copy, Check, FolderGit2, Palette, GraduationCap, Sparkles } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { RepellingBackground } from './RepellingBackground';
-import { CartoonGirlBoard } from './CartoonGirlBoard';
+import React, { useRef } from 'react';
+import { motion } from 'motion/react';
+import { ArrowUpRight, ChevronUp, Settings } from 'lucide-react';
+import { VideoCursorCharacter } from './VideoCursorCharacter';
 
-export const HeroSection = ({ profile, onOpenResume, onOpenArtCanvas }) => {
-  const [copied, setCopied] = useState(false);
-  const [roleIndex, setRoleIndex] = useState(0);
+export const HeroSection = ({ profile, onOpenResume, onOpenCustomizer }) => {
   const heroRef = useRef(null);
 
-  // Filter out any internship mentions from hero roles as requested
-  const heroRoles = (profile.roles || [])
-    .filter((r) => !r.toLowerCase().includes('c-dot') && !r.toLowerCase().includes('intern'))
-    .concat([
-      'Computer Science Engineering • DTU',
-      'Full-Stack Developer (React, Node, MySQL)',
-      'Systems Programming & Algorithms',
-    ]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % heroRoles.length);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, [heroRoles.length]);
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText(profile.email);
-    setCopied(true);
-    confetti({
-      particleCount: 25,
-      spread: 50,
-      origin: { y: 0.8 },
-      colors: ['#38bdf8', '#cbd5e1', '#f472b6'],
-    });
-    setTimeout(() => setCopied(false), 2200);
-  };
-
-  const scrollToJourney = () => {
-    const el = document.getElementById('unfolding-journey') || document.getElementById('pillars-section');
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
     if (el) {
-      const yOffset = -40;
+      const yOffset = -30;
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
-  const scrollToKeyboard = () => {
-    const el = document.getElementById('data-keyboard-section');
-    if (el) {
-      const yOffset = -40;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
-  const scrollToProjects = () => {
-    const el = document.getElementById('projects-gallery');
-    if (el) {
-      const yOffset = -40;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
-  const scrollToArt = () => {
-    const el = document.getElementById('creative-art-studio');
-    if (el) {
-      const yOffset = -40;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    } else if (onOpenArtCanvas) {
-      onOpenArtCanvas();
-    }
-  };
+  const displayName = profile?.name ? profile.name.split(' ')[0] : 'Shreya';
 
   return (
     <section
       ref={heroRef}
       id="hero-section"
-      className="relative min-h-[94vh] flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 pt-8 pb-16 z-10 overflow-hidden"
+      className="relative min-h-screen w-full bg-gradient-to-r from-[#e2dcd5] via-[#ded7cf] to-[#c7c1b8] text-neutral-900 overflow-hidden select-none"
     >
       {/* 
-        Symmetric geometric objects repelling background strictly confined in Hero Section
-        Covers the complete hero section with interactive repellent physics
+        1. Top Floating Glassmorphism Pill Navigation (Centered)
       */}
-      <RepellingBackground containerRef={heroRef} />
-
-      {/* Foreground Content */}
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-        {/* Top Status Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-5 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/90 text-slate-800 border border-slate-200 text-xs font-medium shadow-xs backdrop-blur-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            Delhi Technological University (DTU, formerly DCE)
-          </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/90 text-slate-800 border border-slate-200 text-xs font-mono backdrop-blur-xs">
-            <GraduationCap className="w-3.5 h-3.5 text-sky-600" />
-            CSE • Roll: 24/CS/425 • CGPA 8.234
-          </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/90 text-slate-800 border border-slate-200 text-xs font-medium backdrop-blur-xs">
-            <Palette className="w-3 h-3 text-pink-600" />
-            Fine Art &amp; Creative Tech
-          </div>
-        </div>
-
-        {/* Name Heading */}
-        <div className="relative my-2">
-          <p className="text-xs sm:text-sm uppercase tracking-widest font-mono text-slate-500 mb-2">
-            Computer Science Engineer &amp; Full-Stack Developer
-          </p>
-
-          <h1
-            id="hero-plain-name"
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 select-none py-1"
+      <div className="absolute top-4 sm:top-6 left-0 right-0 z-40 flex items-center justify-center px-4 pointer-events-none">
+        <div className="flex items-center gap-1 sm:gap-2 px-4 sm:px-6 py-2.5 rounded-full bg-white/80 hover:bg-white/95 backdrop-blur-xl border border-neutral-300/80 shadow-lg transition-all pointer-events-auto">
+          <button
+            onClick={() => scrollTo('about-section')}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
+            id="hero-nav-about"
           >
-            {profile.name}
+            ABOUT
+          </button>
+          <span className="text-neutral-300 text-xs">•</span>
+          <button
+            onClick={() => scrollTo('projects-gallery')}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
+            id="hero-nav-work"
+          >
+            WORK
+          </button>
+          <span className="text-neutral-300 text-xs">•</span>
+          <button
+            onClick={() => scrollTo('skills-section')}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
+            id="hero-nav-skills"
+          >
+            SKILLS
+          </button>
+          <span className="text-neutral-300 text-xs">•</span>
+          <button
+            onClick={() => scrollTo('footer')}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
+            id="hero-nav-contact"
+          >
+            CONNECT
+          </button>
+
+          {onOpenCustomizer && (
+            <button
+              onClick={onOpenCustomizer}
+              className="ml-1 p-1.5 rounded-full text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100 transition-colors"
+              title="Customize Profile"
+            >
+              <Settings className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* 
+        2. ZERO-GHOSTING 60 FPS ULTRA-SMOOTH CURSOR TRACKING CHARACTER
+        64 high-density WebP frames + direct eye contact center deadzone
+        Centered directly in the middle of the page with seamless edge-to-edge table
+      */}
+      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden flex items-end justify-center">
+        <VideoCursorCharacter />
+      </div>
+
+      {/* 
+        3. Foreground Overlay Content (Left side & Lower Left)
+        Framing the centered model, matching the exact reference photo layout.
+      */}
+      <div className="relative z-20 max-w-7xl mx-auto min-h-screen flex flex-col justify-between px-6 sm:px-10 lg:px-14 py-8 pointer-events-none">
+        {/* Top spacer to account for top navbar */}
+        <div className="h-16 sm:h-20" />
+
+        {/* Left Side Content Card / Typography */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="max-w-md lg:max-w-lg pointer-events-none my-auto space-y-4 text-left"
+        >
+          {/* Small Top Label */}
+          <div className="inline-flex items-center gap-2 pointer-events-none">
+            <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-neutral-800 uppercase font-mono">
+              HI, I'M
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+          </div>
+
+          {/* Large Script Cursive Name */}
+          <h1
+            id="hero-script-name"
+            className="text-6xl sm:text-7xl md:text-8xl xl:text-9xl text-neutral-900 font-normal leading-[0.95] tracking-wide font-['Pacifico',cursive] drop-shadow-sm select-none py-1 pointer-events-none"
+          >
+            {displayName}
           </h1>
 
-          {/* Dynamic Role Subtitle */}
-          <div className="h-9 mt-2 flex items-center justify-center">
-            <span className="font-mono text-base sm:text-lg md:text-xl text-slate-700 font-semibold flex items-center gap-2">
-              <span className="text-sky-600 font-bold">&gt;</span>
-              <span className="border-b border-dashed border-slate-400 pb-0.5 transition-all duration-300">
-                {heroRoles[roleIndex]}
-              </span>
-              <span className="inline-block w-2 h-5 bg-slate-400 animate-pulse" />
+          {/* Subtitle Bio matching reference photo */}
+          <p className="text-sm sm:text-base md:text-lg text-neutral-700 leading-relaxed font-normal tracking-wide font-sans pointer-events-none">
+            Crafting modern full-stack web experiences with clean code, creative motion, and scalable digital architecture.
+          </p>
+
+          {/* Sub-tag with University & Department */}
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-neutral-800 font-mono pointer-events-none">
+            <span className="px-3 py-1 rounded-full bg-white/85 backdrop-blur-md border border-neutral-300/80 shadow-sm pointer-events-none">
+              DTU CSE ‘28
+            </span>
+            <span className="px-3 py-1 rounded-full bg-white/85 backdrop-blur-md border border-neutral-300/80 shadow-sm pointer-events-none">
+              Roll: 24/CS/425
+            </span>
+            <span className="px-3 py-1 rounded-full bg-white/85 backdrop-blur-md border border-neutral-300/80 shadow-sm pointer-events-none">
+              Full-Stack &amp; Fine Art
             </span>
           </div>
 
-          {/* Plain, refined bio - no C-DOT mention in hero */}
-          <p className="mt-3 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-            Pursuing Computer Science &amp; Engineering at{' '}
-            <strong className="text-slate-800 font-semibold">Delhi Technological University (DTU)</strong>.
-            Balancing formal compiler construction, database architectures, and automata theory with the deliberate brushwork of creative digital and acrylic art.
-          </p>
-        </div>
+          {/* Pill Action Buttons matching reference */}
+          <div className="flex flex-wrap items-center gap-4 pt-3 pointer-events-none">
+            {/* RESUME ^ Pill */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onOpenResume}
+              className="px-8 py-3.5 rounded-full bg-neutral-900 text-white hover:bg-neutral-800 text-xs sm:text-sm font-bold tracking-widest uppercase shadow-xl hover:shadow-2xl transition-all flex items-center gap-2 cursor-pointer pointer-events-auto group"
+              id="hero-resume-pill"
+            >
+              <span>RESUME</span>
+              <ChevronUp className="w-4 h-4 text-white group-hover:-translate-y-0.5 transition-transform" />
+            </motion.button>
 
-        {/* 
-          CARTOON GIRL & STANDING BOARD:
-          Anchored in the hero section, stands like a physical presentation board with perspective depth!
-        */}
-        <CartoonGirlBoard profile={profile} />
+            {/* LET'S TALK Outline Pill */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTo('contact-section')}
+              className="px-8 py-3.5 rounded-full bg-white/80 hover:bg-neutral-900 text-neutral-900 hover:text-white border-2 border-neutral-900 text-xs sm:text-sm font-bold tracking-widest uppercase backdrop-blur-md shadow-lg transition-all flex items-center gap-2 cursor-pointer pointer-events-auto"
+              id="hero-letstalk-pill"
+            >
+              <span>LET'S TALK</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </motion.button>
+          </div>
+        </motion.div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-4 max-w-xl">
-          {/* Unfold Bento Device Primary CTA */}
+        {/* Bottom Scroll Prompt */}
+        <div className="pointer-events-auto flex justify-start items-center pt-4 pb-16 sm:pb-18 z-20">
           <button
-            id="hero-unfold-cta"
-            onClick={scrollToJourney}
-            className="px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 shadow-xs hover:shadow-sm transition-all flex items-center gap-2 active:scale-95 cursor-pointer"
+            onClick={() => scrollTo('about-section')}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-neutral-300/80 text-neutral-800 hover:text-neutral-950 text-xs font-mono tracking-widest uppercase shadow-md transition-all cursor-pointer group"
           >
-            <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-            Unfold Bento Device
-            <ArrowDown className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Keyboard Data Stream CTA */}
-          <button
-            id="hero-keyboard-cta"
-            onClick={scrollToKeyboard}
-            className="px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-          >
-            Keyboard Data Stream
-          </button>
-
-          {/* Projects CTA */}
-          <button
-            id="hero-projects-cta"
-            onClick={scrollToProjects}
-            className="px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-          >
-            <FolderGit2 className="w-3.5 h-3.5 text-slate-600" />
-            Projects
-          </button>
-
-          {/* Art Corner CTA */}
-          <button
-            id="hero-art-cta"
-            onClick={scrollToArt}
-            className="px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium text-pink-700 bg-pink-50 hover:bg-pink-100 border border-pink-200 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-          >
-            <Palette className="w-3.5 h-3.5 text-pink-600" />
-            Painting Corner
-          </button>
-
-          {/* Copy Email Button */}
-          <button
-            id="hero-copy-email-btn"
-            onClick={copyEmail}
-            className="px-3.5 py-2.5 rounded-lg text-xs font-mono font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-            title="Copy email to clipboard"
-          >
-            {copied ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-emerald-700">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5 text-slate-500" />
-                <span>{profile.email}</span>
-              </>
-            )}
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+            <span className="group-hover:translate-x-0.5 transition-transform">Explore About &amp; Work</span>
           </button>
         </div>
       </div>
+
+      {/* 
+        Merge Shade Transition:
+        Soft feathered gradient at the bottom of the Hero section that smoothly melts the desk 
+        into the transition shade leading into the sunset sky below.
+      */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-16 sm:h-24 pointer-events-none z-15"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(223, 211, 195, 0.3) 30%, rgba(223, 211, 195, 0.7) 70%, rgba(223, 211, 195, 0.95) 100%)',
+        }}
+      />
     </section>
   );
 };

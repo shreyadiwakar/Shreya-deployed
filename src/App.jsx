@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { NeonCursor } from './components/NeonCursor';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { UnfoldingBentoSection } from './components/UnfoldingBentoSection';
 import { InteractiveDataKeyboard } from './components/InteractiveDataKeyboard';
-import { SkillsMatrix } from './components/SkillsMatrix';
-import { InteractiveTerminal } from './components/InteractiveTerminal';
-import { ExperienceTimeline } from './components/ExperienceTimeline';
 import { ProjectsSection } from './components/ProjectsSection';
-import { PaintingCornerSection } from './components/PaintingCornerSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { PortfolioCustomizerModal } from './components/PortfolioCustomizerModal';
 import { PhysicsControlsWidget } from './components/PhysicsControlsWidget';
 import { DriftingElementsCanvas } from './components/DriftingElementsCanvas';
+import { MovingCloudsOverlay } from './components/MovingCloudsOverlay';
+import { AboutMeSection } from './components/AboutMeSection';
+import { TechnicalSkillsSection } from './components/TechnicalSkillsSection';
+import { BeyondCodeSection } from './components/BeyondCodeSection';
 import { SleepyCatCompanion } from './components/SleepyCatCompanion';
 
 import {
@@ -91,51 +89,62 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="relative">
-        {/* 
-          4. Hero Section:
-          CRITICAL CONSTRAINT: Repelling effect is STRICTLY confined within this Hero Section only.
-          Features Shreya Diwakar's automatic flashing neon name, DTU CSE badges, and metrics.
-        */}
+        {/* 1. Hero Section */}
         <HeroSection
           profile={profile}
           onOpenResume={() => setIsResumeOpen(true)}
-        />
-
-        {/* 5. Unfolding Bento Section (Boxes unfold from single rectangle on scroll) */}
-        <UnfoldingBentoSection
-          profile={profile}
-          education={educationData}
-          skills={skillsData}
+          onOpenCustomizer={() => setIsCustomizerOpen(true)}
         />
 
         {/* 
-          6. Interactive Mechanical Data Keyboard:
-          Represents Shreya's data (DTU CSE, Compilers, Painting) via automatic key typing animation 
-          and an interactive typing test mode!
+          Sunset Sky Background Wrapper:
+          Applied to ALL sections except HeroSection as requested ("put in bg except hero section").
+          Features high-resolution pastel sunset sky, subtle readable scrim, and moving cloud effect.
         */}
-        <InteractiveDataKeyboard />
+        <div
+          className="relative w-full overflow-hidden bg-cover bg-center bg-fixed bg-no-repeat"
+          style={{ backgroundImage: "url('/pastel_sunset_sky.jpg')" }}
+        >
+          {/* 
+            Smooth Linear Gradient Transition:
+            Clean, seamless vertical color gradient transitioning from the Hero desk's warm beige tone (#dfd3c3)
+            into warm cream, soft rose-beige, and pastel blush, smoothly fading into the sunset sky.
+          */}
+          <div
+            className="absolute top-0 left-0 right-0 h-52 sm:h-72 pointer-events-none z-10"
+            style={{
+              background: 'linear-gradient(to bottom, #dfd3c3 0%, rgba(223, 211, 195, 0.95) 12%, rgba(229, 216, 204, 0.8) 28%, rgba(237, 220, 219, 0.55) 48%, rgba(244, 226, 228, 0.3) 70%, rgba(244, 226, 228, 0.08) 88%, transparent 100%)',
+            }}
+          />
 
-        {/* 7. Skills Matrix in Soft Mix of Colors */}
-        <SkillsMatrix skillCategories={skillsData} />
+          {/* Luminous soft scrim to keep text, cards, and code crisp and high-contrast */}
+          <div className="absolute inset-0 bg-white/20 backdrop-blur-[1px] pointer-events-none z-0" />
 
-        {/* 7. Interactive Terminal Playground */}
-        <InteractiveTerminal profile={profile} projects={projects} />
+          {/* Gentle moving cloud drifting effect */}
+          <MovingCloudsOverlay />
 
-        {/* 8. Experience & Milestones Timeline */}
-        <ExperienceTimeline experience={experienceData} />
+          {/* Foreground Sections */}
+          <div className="relative z-10">
+            {/* 1. About Me Section (blue accent with full story & personal facts) */}
+            <AboutMeSection />
 
-        {/* 9. Projects Gallery with Scroll-Driven Zoom Effect */}
-        <ProjectsSection projects={projects} />
+            {/* 2. Things I have built (Projects Section) */}
+            <ProjectsSection projects={projects} />
 
-        {/* 10. Creative Art Corner & Pastel Easel (Celebrating Shreya's Painting hobby) */}
-        <PaintingCornerSection />
+            {/* 3. My Technical Skills Section */}
+            <TechnicalSkillsSection />
 
-        {/* 11. Contact & Socials */}
-        <ContactSection profile={profile} />
+            {/* 4. Beyond Code Section (Hobbies & Creative side) */}
+            <BeyondCodeSection />
+
+            {/* 5. Interactive Mechanical Data Keyboard (Let's connect) */}
+            <InteractiveDataKeyboard />
+
+            {/* 6. Footer */}
+            <Footer profile={profile} />
+          </div>
+        </div>
       </main>
-
-      {/* 12. Footer */}
-      <Footer profile={profile} />
 
       {/* 
         13. Sleepy Cat Companion:

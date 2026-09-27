@@ -42,7 +42,7 @@ export const UnfoldingBentoSection = ({
 
   return (
     <section
-      id="unfolding-journey"
+      id="pillars-section"
       ref={containerRef}
       className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto z-10"
     >

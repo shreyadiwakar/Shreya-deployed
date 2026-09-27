@@ -6,3 +6,10 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Scratch and reference media
+*.mp4
+*.webm
+test_*.png
+public2/
+scripts/

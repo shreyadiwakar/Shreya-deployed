@@ -9,7 +9,7 @@ export const Footer = ({ profile }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-white border-t border-slate-200 text-slate-700 pt-12 pb-8 px-4 sm:px-6 lg:px-8 z-10">
+    <footer id="footer" className="relative bg-white/75 backdrop-blur-xl border-t border-white/60 text-slate-700 pt-12 pb-8 px-4 sm:px-6 lg:px-8 z-10 shadow-lg">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pb-8 border-b border-slate-100">
           {/* Brand and Description */}
@@ -43,28 +43,28 @@ export const Footer = ({ profile }) => {
                   </a>
                 </li>
                 <li>
-                  <a href="#unfolding-journey" className="hover:text-slate-900 transition-colors">
-                    Modular Pillars
-                  </a>
-                </li>
-                <li>
-                  <a href="#data-keyboard-section" className="hover:text-slate-900 transition-colors">
-                    Interactive Keyboard
-                  </a>
-                </li>
-                <li>
-                  <a href="#skills-matrix" className="hover:text-slate-900 transition-colors">
-                    Skills Matrix
-                  </a>
-                </li>
-                <li>
-                  <a href="#experience-timeline" className="hover:text-slate-900 transition-colors">
-                    Experience &amp; C-DOT
+                  <a href="#about-section" className="hover:text-slate-900 transition-colors">
+                    About Me
                   </a>
                 </li>
                 <li>
                   <a href="#projects-gallery" className="hover:text-slate-900 transition-colors">
-                    Featured Projects
+                    Things I have built
+                  </a>
+                </li>
+                <li>
+                  <a href="#skills-section" className="hover:text-slate-900 transition-colors">
+                    Technical Skills
+                  </a>
+                </li>
+                <li>
+                  <a href="#beyond-code-section" className="hover:text-slate-900 transition-colors">
+                    Beyond Code
+                  </a>
+                </li>
+                <li>
+                  <a href="#data-keyboard-section" className="hover:text-slate-900 transition-colors">
+                    Let's Connect
                   </a>
                 </li>
               </ul>

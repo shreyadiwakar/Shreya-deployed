@@ -188,7 +188,7 @@ export const initialProjects = [
     ],
     date: 'April 2026',
     metrics: 'Full relational CRUD with bcryptjs cryptographic authentication & responsive design',
-    githubUrl: 'https://github.com/shreyadiwakar/social-media-app',
+    githubUrl: 'https://github.com/shreyadiwakar/Social-Media-App',
     liveUrl: 'https://social-media.shreyadiwakar.dev',
     featured: true,
     architectureHighlights: [
@@ -200,7 +200,7 @@ export const initialProjects = [
   },
   {
     id: 'elearning-platform-cpp',
-    title: 'Console-Based E-Learning Platform',
+    title: 'E-Learning System',
     tagline: 'Menu-driven C++ learning management system featuring dual role-based workflows for students and instructors.',
     description: 'Created a comprehensive menu-driven console-based e-learning system using modern C++ with object-oriented paradigms, STL data structures, and persistent file handling.',
     longDescription: 'Constructed an architectural console application establishing dual permission roles: a student interface (registration, course enrollment, quiz attempts, assignment submissions, and progress monitoring) and an instructor interface (course creation, assignment authoring, quiz design, and submission evaluation) backed by persistent disk storage.',
@@ -215,7 +215,7 @@ export const initialProjects = [
     ],
     date: 'Nov 2025',
     metrics: 'Role-based access control with dual-portal workflows & persistent disk file records',
-    githubUrl: 'https://github.com/shreyadiwakar/elearning-cpp',
+    githubUrl: 'https://github.com/shreyadiwakar/E-Learning-System',
     liveUrl: 'https://elearning-cpp.shreyadiwakar.dev',
     featured: true,
     architectureHighlights: [
@@ -243,7 +243,7 @@ export const initialProjects = [
     ],
     date: 'March 2026',
     metrics: 'High-speed React Vite client with complete relational MySQL CRUD API synchronization',
-    githubUrl: 'https://github.com/shreyadiwakar/employee-record-management',
+    githubUrl: 'https://github.com/shreyadiwakar/Employee-Record-Management-System',
     liveUrl: 'https://employee-management.shreyadiwakar.dev',
     featured: true,
     architectureHighlights: [

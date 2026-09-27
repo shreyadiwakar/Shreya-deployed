@@ -1,28 +1,29 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Keyboard as KeyboardIcon, CheckCircle2, Trophy, Gauge } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import React, { useState, useEffect, useRef } from 'react';
+import { Linkedin, Github, ArrowUpRight } from 'lucide-react';
+
+const CONNECT_TEXT = "Whether it's a project, an interesting idea, a collaboration, or just a conversation about tech, I'd love to hear from you.";
 
 const KEYBOARD_ROWS = [
   // Row 1: Numbers & Backspace
   [
-    { code: 'Backquote', label: '`', shiftLabel: '~' },
-    { code: 'Digit1', label: '1', shiftLabel: '!' },
-    { code: 'Digit2', label: '2', shiftLabel: '@' },
-    { code: 'Digit3', label: '3', shiftLabel: '#' },
-    { code: 'Digit4', label: '4', shiftLabel: '$' },
-    { code: 'Digit5', label: '5', shiftLabel: '%' },
-    { code: 'Digit6', label: '6', shiftLabel: '^' },
-    { code: 'Digit7', label: '7', shiftLabel: '&' },
-    { code: 'Digit8', label: '8', shiftLabel: '*' },
-    { code: 'Digit9', label: '9', shiftLabel: '(' },
-    { code: 'Digit0', label: '0', shiftLabel: ')' },
-    { code: 'Minus', label: '-', shiftLabel: '_' },
-    { code: 'Equal', label: '=', shiftLabel: '+' },
-    { code: 'Backspace', label: 'Bksp', width: 'w-14 sm:w-16' },
+    { code: 'Backquote', label: '`' },
+    { code: 'Digit1', label: '1' },
+    { code: 'Digit2', label: '2' },
+    { code: 'Digit3', label: '3' },
+    { code: 'Digit4', label: '4' },
+    { code: 'Digit5', label: '5' },
+    { code: 'Digit6', label: '6' },
+    { code: 'Digit7', label: '7' },
+    { code: 'Digit8', label: '8' },
+    { code: 'Digit9', label: '9' },
+    { code: 'Digit0', label: '0' },
+    { code: 'Minus', label: '-' },
+    { code: 'Equal', label: '=' },
+    { code: 'Backspace', label: 'Bksp', width: 'w-11 sm:w-13' },
   ],
   // Row 2: QWERTY
   [
-    { code: 'Tab', label: 'Tab', width: 'w-12 sm:w-14' },
+    { code: 'Tab', label: 'Tab', width: 'w-10 sm:w-12' },
     { code: 'KeyQ', label: 'Q' },
     { code: 'KeyW', label: 'W' },
     { code: 'KeyE', label: 'E' },
@@ -33,13 +34,13 @@ const KEYBOARD_ROWS = [
     { code: 'KeyI', label: 'I' },
     { code: 'KeyO', label: 'O' },
     { code: 'KeyP', label: 'P' },
-    { code: 'BracketLeft', label: '[', shiftLabel: '{' },
-    { code: 'BracketRight', label: ']', shiftLabel: '}' },
-    { code: 'Backslash', label: '\\', shiftLabel: '|', width: 'w-10 sm:w-12' },
+    { code: 'BracketLeft', label: '[' },
+    { code: 'BracketRight', label: ']' },
+    { code: 'Backslash', label: '\\', width: 'w-9 sm:w-11' },
   ],
   // Row 3: ASDF
   [
-    { code: 'CapsLock', label: 'Caps', width: 'w-14 sm:w-16' },
+    { code: 'CapsLock', label: 'Caps', width: 'w-11 sm:w-13' },
     { code: 'KeyA', label: 'A' },
     { code: 'KeyS', label: 'S' },
     { code: 'KeyD', label: 'D' },
@@ -49,13 +50,13 @@ const KEYBOARD_ROWS = [
     { code: 'KeyJ', label: 'J' },
     { code: 'KeyK', label: 'K' },
     { code: 'KeyL', label: 'L' },
-    { code: 'Semicolon', label: ';', shiftLabel: ':' },
-    { code: 'Quote', label: "'", shiftLabel: '"' },
-    { code: 'Enter', label: 'Enter', width: 'w-16 sm:w-20' },
+    { code: 'Semicolon', label: ';' },
+    { code: 'Quote', label: "'" },
+    { code: 'Enter', label: 'Enter', width: 'w-12 sm:w-15' },
   ],
   // Row 4: ZXCV
   [
-    { code: 'ShiftLeft', label: 'Shift', width: 'w-18 sm:w-22' },
+    { code: 'ShiftLeft', label: 'Shift', width: 'w-13 sm:w-16' },
     { code: 'KeyZ', label: 'Z' },
     { code: 'KeyX', label: 'X' },
     { code: 'KeyC', label: 'C' },
@@ -63,418 +64,168 @@ const KEYBOARD_ROWS = [
     { code: 'KeyB', label: 'B' },
     { code: 'KeyN', label: 'N' },
     { code: 'KeyM', label: 'M' },
-    { code: 'Comma', label: ',', shiftLabel: '<' },
-    { code: 'Period', label: '.', shiftLabel: '>' },
-    { code: 'Slash', label: '/', shiftLabel: '?' },
-    { code: 'ShiftRight', label: 'Shift', width: 'w-16 sm:w-20' },
+    { code: 'Comma', label: ',' },
+    { code: 'Period', label: '.' },
+    { code: 'Slash', label: '/' },
+    { code: 'ShiftRight', label: 'Shift', width: 'w-13 sm:w-16' },
   ],
   // Row 5: Space & Modifiers
   [
-    { code: 'ControlLeft', label: 'Ctrl', width: 'w-10 sm:w-12' },
-    { code: 'MetaLeft', label: 'Cmd', width: 'w-10 sm:w-12' },
-    { code: 'AltLeft', label: 'Alt', width: 'w-10 sm:w-12' },
-    { code: 'Space', label: 'Space', width: 'flex-1 max-w-sm sm:max-w-md' },
-    { code: 'AltRight', label: 'Alt', width: 'w-10 sm:w-12' },
-    { code: 'MetaRight', label: 'Fn', width: 'w-10 sm:w-12' },
-    { code: 'ControlRight', label: 'Ctrl', width: 'w-10 sm:w-12' },
+    { code: 'ControlLeft', label: 'Ctrl', width: 'w-8 sm:w-10' },
+    { code: 'MetaLeft', label: 'Cmd', width: 'w-8 sm:w-10' },
+    { code: 'AltLeft', label: 'Alt', width: 'w-8 sm:w-10' },
+    { code: 'Space', label: 'Space', width: 'flex-1 max-w-xs sm:max-w-sm' },
+    { code: 'AltRight', label: 'Alt', width: 'w-8 sm:w-10' },
+    { code: 'MetaRight', label: 'Fn', width: 'w-8 sm:w-10' },
+    { code: 'ControlRight', label: 'Ctrl', width: 'w-8 sm:w-10' },
   ],
 ];
 
-const DATA_PRESETS = [
+const CONNECT_LINKS = [
   {
-    id: 'dtu-record',
-    name: 'DTU Student Record',
-    category: 'Academics',
-    text: 'SHREYA DIWAKAR | DTU CSE 24/CS/425 | CGPA: 8.234 | DELHI TECHNOLOGICAL UNIVERSITY',
-    description: 'Academic credentials and department verification at Delhi Technological University (formerly DCE).',
+    name: 'LinkedIn',
+    value: 'shreyadiwakar',
+    href: 'https://linkedin.com/in/shreyadiwakar',
+    icon: Linkedin,
+    color: 'hover:text-blue-600 hover:border-blue-300',
   },
   {
-    id: 'cdot-internship',
-    name: 'C-DOT Software Internship',
-    category: 'Experience',
-    text: 'C-DOT DELHI: PLAYWRIGHT E2E + AI TEST AGENTS + DOCKER COMPOSE CONTAINERIZATION',
-    description: 'Automated end-to-end testing, AI test agents (Planner, Generator, Healer), and full-stack containerization.',
-  },
-  {
-    id: 'social-media-app',
-    name: 'Full-Stack Social Platform',
-    category: 'Projects',
-    text: 'REACT.JS + NODE.JS + EXPRESS.JS + MYSQL + BCRYPTJS PASSWORD HASHING',
-    description: 'Full-stack social media application with profiles, posts, comments, likes, and relational schemas.',
-  },
-  {
-    id: 'cpp-elearning',
-    name: 'C++ Console E-Learning',
-    category: 'Systems',
-    text: 'CPP OOP + STL: ROLE-BASED COURSES, QUIZZES, ASSIGNMENTS & FILE HANDLING',
-    description: 'Object-oriented console e-learning platform with student and instructor workflows.',
+    name: 'GitHub',
+    value: 'shreyadiwakar',
+    href: 'https://github.com/shreyadiwakar',
+    icon: Github,
+    color: 'hover:text-slate-900 hover:border-slate-400',
   },
 ];
 
 export const InteractiveDataKeyboard = () => {
-  const [selectedPreset, setSelectedPreset] = useState(DATA_PRESETS[0]);
-  const [autoPlay, setAutoPlay] = useState(true);
   const [typedIndex, setTypedIndex] = useState(0);
-  const [activeKeyCode, setActiveKeyCode] = useState(null);
-  const [soundEnabled, setSoundEnabled] = useState(false);
-  const [typingSpeedMs, setTypingSpeedMs] = useState(120);
+  const [activeKeyCodes, setActiveKeyCodes] = useState([]);
+  const screenRef = useRef(null);
 
-  // Interactive Typing Test Mode State
-  const [isTestMode, setIsTestMode] = useState(false);
-  const [testInput, setTestInput] = useState('');
-  const [testStartTime, setTestStartTime] = useState(null);
-  const [testWpm, setTestWpm] = useState(0);
-  const [testAccuracy, setTestAccuracy] = useState(100);
-  const [testFinished, setTestFinished] = useState(false);
-
-  const audioCtxRef = useRef(null);
-  const containerRef = useRef(null);
-
-  // Play synthetic mechanical click tone
-  const playMechanicalClick = useCallback(() => {
-    if (!soundEnabled) return;
-    try {
-      if (!audioCtxRef.current) {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        audioCtxRef.current = new AudioCtx();
-      }
-      const ctx = audioCtxRef.current;
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(650 + Math.random() * 80, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.03);
-
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start();
-      osc.stop(ctx.currentTime + 0.03);
-    } catch {
-      // Audio not permitted or supported
-    }
-  }, [soundEnabled]);
-
-  // Helper to map a character to key code
+  // Map any character to its physical keyboard key code
   const charToKeyCode = (ch) => {
     const upper = ch.toUpperCase();
     if (upper >= 'A' && upper <= 'Z') return `Key${upper}`;
     if (ch >= '0' && ch <= '9') return `Digit${ch}`;
     if (ch === ' ') return 'Space';
-    if (ch === '-' || ch === '_') return 'Minus';
-    if (ch === '=' || ch === '+') return 'Equal';
-    if (ch === '[' || ch === '{') return 'BracketLeft';
-    if (ch === ']' || ch === '}') return 'BracketRight';
-    if (ch === ';' || ch === ':') return 'Semicolon';
-    if (ch === "'" || ch === '"') return 'Quote';
-    if (ch === ',' || ch === '<') return 'Comma';
-    if (ch === '.' || ch === '>') return 'Period';
-    if (ch === '/' || ch === '?') return 'Slash';
-    if (ch === '|' || ch === '\\') return 'Backslash';
+    if (ch === "'" || ch === '’') return 'Quote';
+    if (ch === ',') return 'Comma';
+    if (ch === '.') return 'Period';
+    if (ch === '-') return 'Minus';
     return 'Space';
   };
 
-  // Automatic Key Click Animation Loop
+  // Automated Typing Loop: Actuates keys visibly with crisp down/up clicks
   useEffect(() => {
-    if (isTestMode || !autoPlay) return;
-
     const timer = setInterval(() => {
       setTypedIndex((prev) => {
-        const fullText = selectedPreset.text;
-        if (prev >= fullText.length) {
-          // Pause brief moment then loop back
+        if (prev >= CONNECT_TEXT.length) {
+          // Pause at end of text before repeating
           return 0;
         }
 
-        const nextChar = fullText[prev];
-        const code = charToKeyCode(nextChar);
-        setActiveKeyCode(code);
-        playMechanicalClick();
+        const nextChar = CONNECT_TEXT[prev];
+        const primaryCode = charToKeyCode(nextChar);
+        const isUpper = nextChar >= 'A' && nextChar <= 'Z';
 
-        // Release key depression after 70ms
+        // Depress key (and Shift if uppercase)
+        const keysToPress = isUpper ? [primaryCode, 'ShiftLeft'] : [primaryCode];
+        setActiveKeyCodes(keysToPress);
+
+        // Spring key back UP after 65ms for a visible mechanical click stroke
         setTimeout(() => {
-          setActiveKeyCode(null);
-        }, 70);
+          setActiveKeyCodes([]);
+        }, 65);
 
         return prev + 1;
       });
-    }, typingSpeedMs);
+    }, 95);
 
     return () => clearInterval(timer);
-  }, [autoPlay, isTestMode, selectedPreset, typingSpeedMs, playMechanicalClick]);
+  }, []);
 
-  // Handle Interactive Typing Test Input
-  const handleTestKeyDown = (e) => {
-    if (!isTestMode || testFinished) return;
-
-    const code = e.code;
-    setActiveKeyCode(code);
-    playMechanicalClick();
-    setTimeout(() => setActiveKeyCode(null), 80);
-
-    if (!testStartTime) {
-      setTestStartTime(Date.now());
+  // Automatically shift / auto-scroll the single-line text so keyboard size NEVER increases
+  useEffect(() => {
+    if (screenRef.current) {
+      screenRef.current.scrollLeft = screenRef.current.scrollWidth;
     }
-  };
+  }, [typedIndex]);
 
-  const handleTestChange = (e) => {
-    const val = e.target.value;
-    const target = selectedPreset.text;
-    setTestInput(val);
+  // Support manual key presses on physical keyboard
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      setActiveKeyCodes([e.code]);
+    };
 
-    // Compute live stats
-    if (testStartTime) {
-      const elapsedMinutes = (Date.now() - testStartTime) / 60000;
-      if (elapsedMinutes > 0.01) {
-        const wordsTyped = val.length / 5;
-        setTestWpm(Math.round(wordsTyped / elapsedMinutes));
-      }
-    }
+    const handleKeyUp = () => {
+      setActiveKeyCodes([]);
+    };
 
-    // Compute accuracy
-    let correctCount = 0;
-    for (let i = 0; i < val.length; i++) {
-      if (val[i] === target[i]) correctCount++;
-    }
-    const acc = val.length > 0 ? Math.round((correctCount / val.length) * 100) : 100;
-    setTestAccuracy(acc);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
 
-    // Completion check
-    if (val === target) {
-      setTestFinished(true);
-      confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#38bdf8', '#f472b6', '#4ade80', '#facc15'],
-      });
-    }
-  };
-
-  const restartTyping = () => {
-    setTypedIndex(0);
-    setTestInput('');
-    setTestStartTime(null);
-    setTestWpm(0);
-    setTestAccuracy(100);
-    setTestFinished(false);
-  };
-
-  const displayedStreamText = isTestMode
-    ? testInput
-    : selectedPreset.text.slice(0, typedIndex);
+  const displayedText = CONNECT_TEXT.slice(0, typedIndex);
 
   return (
-    <section
-      id="data-keyboard-section"
-      ref={containerRef}
-      className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto z-10"
-    >
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
-        <p className="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-          <KeyboardIcon className="w-3.5 h-3.5 text-slate-600" />
-          Interactive Data Architecture
-        </p>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-          Physical <span className="text-sky-600">Keyboard</span> Data Stream
+    <section id="data-keyboard-section" className="relative py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto z-10">
+      {/* Title: -Let's connect */}
+      <div className="text-center max-w-2xl mx-auto mb-6">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight font-heading">
+          Let's <span className="text-sky-600">connect</span>
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-slate-600">
-          Translating structured credentials and compiler logic into real mechanical key actuations.
-          Watch the keys click automatically or test your typing speed on my records.
-        </p>
-
-        {/* Preset Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
-          {DATA_PRESETS.map((preset) => (
-            <button
-              key={preset.id}
-              onClick={() => {
-                setSelectedPreset(preset);
-                restartTyping();
-              }}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border ${selectedPreset.id === preset.id
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                  : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-                }`}
-            >
-              {preset.name}
-            </button>
-          ))}
-
-          {/* Typing Test Toggle Button */}
-          <button
-            onClick={() => {
-              setIsTestMode(!isTestMode);
-              restartTyping();
-            }}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border flex items-center gap-1.5 ${isTestMode
-                ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border-emerald-300'
-              }`}
-          >
-            <Gauge className="w-3.5 h-3.5" />
-            {isTestMode ? 'Exit Typing Test' : 'Test Your Speed'}
-          </button>
-        </div>
       </div>
 
-      {/* Main Keyboard Terminal & Chassis */}
-      <div className="bg-slate-900 rounded-xl p-4 sm:p-7 shadow-xl border border-slate-800 text-white relative">
-        {/* Terminal Screen / Data Readout */}
-        <div className="bg-slate-950 rounded-lg p-4 sm:p-5 border border-slate-800 mb-6 font-mono relative overflow-hidden">
-          <div className="flex items-center justify-between text-xs text-slate-400 pb-2 mb-2 border-b border-slate-800/80">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-emerald-400 font-bold uppercase tracking-wider">
-                {isTestMode ? 'TEST MODE // USER INPUT' : 'AUTOMATED STREAM // CHICLET RUNNER'}
-              </span>
-            </div>
-            <div className="flex items-center gap-4 text-[11px]">
-              <span>PRESET: {selectedPreset.category}</span>
-              <span>CHARS: {displayedStreamText.length}/{selectedPreset.text.length}</span>
-            </div>
-          </div>
-
-          {/* Stream Output Text */}
-          <div className="min-h-[52px] text-sm sm:text-base text-sky-300 font-medium leading-relaxed tracking-wide break-all">
-            {displayedStreamText}
-            <span className="inline-block w-2.5 h-5 bg-pink-400 align-middle ml-1 animate-pulse" />
-          </div>
-
-          {/* Interactive Typing Test Input Field */}
-          {isTestMode && (
-            <div className="mt-3 pt-3 border-t border-slate-800">
-              <input
-                type="text"
-                autoFocus
-                placeholder="Type the data string above to test your speed..."
-                value={testInput}
-                onKeyDown={handleTestKeyDown}
-                onChange={handleTestChange}
-                disabled={testFinished}
-                className="w-full px-3.5 py-2 rounded-lg bg-slate-900 text-white placeholder-slate-500 text-sm font-mono border border-slate-700 focus:outline-hidden focus:border-sky-500"
-              />
-
-              {/* Stats Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 mt-3 text-xs">
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1 text-slate-300">
-                    <Gauge className="w-3.5 h-3.5 text-sky-400" />
-                    Speed: <strong className="text-white text-sm">{testWpm} WPM</strong>
-                  </span>
-                  <span className="text-slate-300">
-                    Accuracy: <strong className="text-emerald-400 text-sm">{testAccuracy}%</strong>
-                  </span>
-                </div>
-
-                {testFinished && (
-                  <div className="inline-flex items-center gap-1.5 text-emerald-400 font-bold text-xs bg-emerald-950/60 px-2.5 py-1 rounded-md border border-emerald-800">
-                    <Trophy className="w-3.5 h-3.5 text-yellow-400" />
-                    Test Completed! Outstanding work.
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+      {/* Compact Whitish Aesthetic Keyboard Container */}
+      <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-xl border border-white/95 max-w-3xl mx-auto">
+        {/* 
+          Fixed-Height Display Screen:
+          Height is strictly fixed so typing text never increases keyboard size.
+          Overflow text shifts horizontally to the left as it types.
+        */}
+        <div
+          ref={screenRef}
+          className="bg-slate-50/95 rounded-xl px-4 py-2 border border-slate-200/90 shadow-inner h-11 sm:h-12 flex items-center mb-3 overflow-hidden select-none whitespace-nowrap scroll-smooth"
+        >
+          <span className="font-mono text-slate-800 text-xs sm:text-sm font-medium tracking-wide inline-block">
+            {displayedText}
+          </span>
+          <span className="inline-block w-1.5 h-4 bg-sky-500 ml-1 shrink-0 animate-pulse" />
         </div>
 
-        {/* Hardware Controls Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-5 px-1">
-          <div className="flex items-center gap-2">
-            {!isTestMode && (
-              <button
-                onClick={() => setAutoPlay(!autoPlay)}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-medium flex items-center gap-1.5 transition-colors border border-slate-700"
-              >
-                {autoPlay ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emerald-400" />}
-                {autoPlay ? 'Pause Stream' : 'Play Stream'}
-              </button>
-            )}
-
-            <button
-              onClick={restartTyping}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-medium flex items-center gap-1.5 transition-colors border border-slate-700"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-sky-400" />
-              Reset
-            </button>
-
-            <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-medium flex items-center gap-1.5 transition-colors border border-slate-700"
-              title="Toggle synthetic mechanical key click sound"
-            >
-              {soundEnabled ? (
-                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
-              ) : (
-                <VolumeX className="w-3.5 h-3.5 text-slate-400" />
-              )}
-              {soundEnabled ? 'Click Audio On' : 'Audio Muted'}
-            </button>
-          </div>
-
-          {!isTestMode && (
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-              <span>Speed:</span>
-              <button
-                onClick={() => setTypingSpeedMs(200)}
-                className={`px-2 py-0.5 rounded-md ${typingSpeedMs === 200 ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-400'}`}
-              >
-                0.75x
-              </button>
-              <button
-                onClick={() => setTypingSpeedMs(120)}
-                className={`px-2 py-0.5 rounded-md ${typingSpeedMs === 120 ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-400'}`}
-              >
-                1.0x
-              </button>
-              <button
-                onClick={() => setTypingSpeedMs(60)}
-                className={`px-2 py-0.5 rounded-md ${typingSpeedMs === 60 ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-400'}`}
-              >
-                1.75x
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Physical Keyboard Layout (Chiclet / Mechanical Keybed) */}
-        <div className="bg-slate-800/90 rounded-xl p-3 sm:p-4 border border-slate-700 shadow-inner overflow-x-auto">
-          <div className="min-w-[620px] flex flex-col gap-1.5 sm:gap-2">
+        {/* Compact Whitish Physical Keyboard Bed */}
+        <div className="bg-slate-100/80 rounded-xl p-2 sm:p-3 border border-slate-200/80 shadow-inner">
+          <div className="space-y-1 sm:space-y-1.5 overflow-x-auto pb-0.5">
             {KEYBOARD_ROWS.map((row, rIdx) => (
-              <div key={rIdx} className="flex gap-1.5 sm:gap-2 justify-center">
-                {row.map((k) => {
-                  const isPressed = activeKeyCode === k.code;
-                  const customWidth = k.width || 'w-8 sm:w-11';
+              <div key={rIdx} className="flex items-center justify-center gap-1 sm:gap-1.5 min-w-[540px]">
+                {row.map((key) => {
+                  const isActive = activeKeyCodes.includes(key.code);
 
                   return (
                     <button
-                      key={k.code}
+                      key={key.code}
                       onClick={() => {
-                        setActiveKeyCode(k.code);
-                        playMechanicalClick();
-                        setTimeout(() => setActiveKeyCode(null), 100);
+                        setActiveKeyCodes([key.code]);
+                        setTimeout(() => setActiveKeyCodes([]), 100);
                       }}
-                      className={`h-9 sm:h-11 ${customWidth} rounded-lg flex flex-col items-center justify-center text-[10px] sm:text-xs font-mono font-bold select-none transition-all duration-75 relative ${isPressed
-                          ? 'bg-sky-400 text-slate-950 translate-y-[3px] shadow-none border-b border-sky-300'
-                          : 'bg-slate-200 hover:bg-white text-slate-800 border-b-[3.5px] border-slate-400 shadow-xs active:translate-y-[3px] active:border-b active:shadow-none'
-                        }`}
-                      title={k.label}
+                      className={`
+                        h-7 sm:h-8.5 rounded-md sm:rounded-lg flex items-center justify-center transition-all select-none
+                        ${key.width || 'w-7 sm:w-8.5'}
+                        ${
+                          isActive
+                            ? 'bg-sky-500 text-white font-black border border-sky-600 shadow-[0_0_12px_rgba(14,165,233,0.85)] translate-y-0.5 scale-95'
+                            : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 shadow-[0_1.5px_0_rgba(203,213,225,0.95)]'
+                        }
+                      `}
                     >
-                      {k.shiftLabel && (
-                        <span className="text-[8px] sm:text-[9px] text-slate-500 leading-none">
-                          {k.shiftLabel}
-                        </span>
-                      )}
-                      <span className="leading-tight">{k.label}</span>
+                      <span className="text-[10px] sm:text-xs font-mono font-bold leading-none">
+                        {key.label}
+                      </span>
                     </button>
                   );
                 })}
@@ -482,17 +233,28 @@ export const InteractiveDataKeyboard = () => {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Footer Note */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 font-mono">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            Hardware Key Switch: Animated via automated loop &amp; key events
-          </span>
-          <span className="text-slate-500">
-            Shreya Diwakar • Interactive Portfolio Component
-          </span>
-        </div>
+      {/* Links to Connect Given Below: Only LinkedIn & GitHub */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        {CONNECT_LINKS.map((link) => {
+          const Icon = link.icon;
+          return (
+            <a
+              key={link.name}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className={`px-5 py-2 rounded-full bg-white/90 hover:bg-white text-slate-800 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2 font-mono text-xs sm:text-sm group ${link.color}`}
+            >
+              <Icon className="w-4 h-4 text-slate-600 group-hover:text-inherit transition-colors" />
+              <span className="font-semibold text-slate-900 group-hover:text-inherit transition-colors">
+                {link.name}
+              </span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-inherit group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+          );
+        })}
       </div>
     </section>
   );
