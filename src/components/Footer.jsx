@@ -48,13 +48,13 @@ export const Footer = ({ profile }) => {
                   </a>
                 </li>
                 <li>
-                  <a href="#projects-gallery" className="hover:text-slate-900 transition-colors">
-                    Things I have built
+                  <a href="#skills-section" className="hover:text-slate-900 transition-colors">
+                    Technical Skills
                   </a>
                 </li>
                 <li>
-                  <a href="#skills-section" className="hover:text-slate-900 transition-colors">
-                    Technical Skills
+                  <a href="#projects-gallery" className="hover:text-slate-900 transition-colors">
+                    Things I have built
                   </a>
                 </li>
                 <li>

@@ -128,11 +128,11 @@ export default function App() {
             {/* 1. About Me Section (blue accent with full story & personal facts) */}
             <AboutMeSection />
 
-            {/* 2. Things I have built (Projects Section) */}
-            <ProjectsSection projects={projects} />
-
-            {/* 3. My Technical Skills Section */}
+            {/* 2. My Technical Skills Section */}
             <TechnicalSkillsSection />
+
+            {/* 3. Things I have built (Projects Section) */}
+            <ProjectsSection projects={projects} />
 
             {/* 4. Beyond Code Section (Hobbies & Creative side) */}
             <BeyondCodeSection />

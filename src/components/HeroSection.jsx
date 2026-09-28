@@ -37,19 +37,19 @@ export const HeroSection = ({ profile, onOpenResume, onOpenCustomizer }) => {
           </button>
           <span className="text-neutral-300 text-xs">•</span>
           <button
-            onClick={() => scrollTo('projects-gallery')}
-            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
-            id="hero-nav-work"
-          >
-            WORK
-          </button>
-          <span className="text-neutral-300 text-xs">•</span>
-          <button
             onClick={() => scrollTo('skills-section')}
             className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
             id="hero-nav-skills"
           >
             SKILLS
+          </button>
+          <span className="text-neutral-300 text-xs">•</span>
+          <button
+            onClick={() => scrollTo('projects-gallery')}
+            className="px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-all cursor-pointer"
+            id="hero-nav-work"
+          >
+            WORK
           </button>
           <span className="text-neutral-300 text-xs">•</span>
           <button

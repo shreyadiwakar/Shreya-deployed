@@ -67,10 +67,12 @@ export const BeyondCodeSection = () => {
                 ease: 'easeOut',
               }}
               style={{
-                backdropFilter: 'blur(24px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+                backdropFilter: 'blur(28px) saturate(190%)',
+                WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.16) 100%)',
+                boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
               }}
-              className="rounded-2xl border border-white/70 bg-white/40 hover:bg-white/55 p-4 sm:p-5 shadow-[0_8px_32px_0_rgba(31,38,135,0.06)] transition-colors duration-200 flex flex-col justify-start"
+              className="rounded-3xl border border-white/60 p-4 sm:p-5 transition-colors duration-200 flex flex-col justify-start"
             >
               {/* Header with Icon Badge */}
               <div className="flex items-center gap-3 pb-3 mb-3 border-b border-slate-200/40">

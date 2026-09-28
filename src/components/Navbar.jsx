@@ -63,20 +63,20 @@ export const Navbar = ({ profile, onOpenResume, onOpenCustomizer }) => {
             About
           </button>
           <button
-            onClick={() => scrollTo('projects-gallery')}
-            className="px-2.5 py-1.5 rounded-lg hover:text-slate-950 hover:bg-slate-100 transition-all flex items-center gap-1.5"
-            id="nav-projects-btn"
-          >
-            <FolderGit2 className="w-3.5 h-3.5 text-slate-700" />
-            Projects
-          </button>
-          <button
             onClick={() => scrollTo('skills-section')}
             className="px-2.5 py-1.5 rounded-lg hover:text-slate-950 hover:bg-slate-100 transition-all flex items-center gap-1.5"
             id="nav-skills-btn"
           >
             <Code2 className="w-3.5 h-3.5 text-pink-600" />
             Skills
+          </button>
+          <button
+            onClick={() => scrollTo('projects-gallery')}
+            className="px-2.5 py-1.5 rounded-lg hover:text-slate-950 hover:bg-slate-100 transition-all flex items-center gap-1.5"
+            id="nav-projects-btn"
+          >
+            <FolderGit2 className="w-3.5 h-3.5 text-slate-700" />
+            Projects
           </button>
           <button
             onClick={() => scrollTo('footer')}
@@ -130,18 +130,18 @@ export const Navbar = ({ profile, onOpenResume, onOpenCustomizer }) => {
             About
           </button>
           <button
-            onClick={() => scrollTo('projects-gallery')}
-            className="w-full px-3 py-2 rounded-lg text-left hover:bg-slate-100 flex items-center gap-2"
-          >
-            <FolderGit2 className="w-4 h-4 text-slate-700" />
-            Projects
-          </button>
-          <button
             onClick={() => scrollTo('skills-section')}
             className="w-full px-3 py-2 rounded-lg text-left hover:bg-slate-100 flex items-center gap-2"
           >
             <Code2 className="w-4 h-4 text-pink-600" />
             Skills
+          </button>
+          <button
+            onClick={() => scrollTo('projects-gallery')}
+            className="w-full px-3 py-2 rounded-lg text-left hover:bg-slate-100 flex items-center gap-2"
+          >
+            <FolderGit2 className="w-4 h-4 text-slate-700" />
+            Projects
           </button>
           <button
             onClick={() => scrollTo('footer')}

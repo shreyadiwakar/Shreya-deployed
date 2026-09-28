@@ -7,40 +7,32 @@ export const TechnicalSkillsSection = () => {
     {
       id: 'languages',
       title: 'Languages',
-      badgeBg: 'bg-rose-100/90 text-rose-600 border border-rose-200/70',
-      border: 'border-white/70 hover:border-rose-300/80',
-      cardBg: 'bg-white/40 hover:bg-white/55',
-      chipStyle: 'border-rose-200/80 text-rose-950 bg-rose-100/40 hover:bg-rose-100/75 hover:border-rose-300 shadow-2xs',
+      badgeBg: 'bg-rose-200/50 text-rose-700 border border-white/70',
+      chipStyle: 'text-rose-950 bg-rose-200/40 hover:bg-rose-200/60',
       icon: Code2,
       skills: ['C', 'C++', 'JavaScript', 'Python'],
     },
     {
       id: 'development',
       title: 'Development',
-      badgeBg: 'bg-amber-100/90 text-amber-600 border border-amber-200/70',
-      border: 'border-white/70 hover:border-amber-300/80',
-      cardBg: 'bg-white/40 hover:bg-white/55',
-      chipStyle: 'border-amber-200/80 text-amber-950 bg-amber-100/40 hover:bg-amber-100/75 hover:border-amber-300 shadow-2xs',
+      badgeBg: 'bg-amber-200/50 text-amber-700 border border-white/70',
+      chipStyle: 'text-amber-950 bg-amber-200/40 hover:bg-amber-200/60',
       icon: Code,
       skills: ['HTML', 'CSS', 'React.js', 'Node.js', 'REST APIs', 'SQL (MySQL)', 'MongoDB'],
     },
     {
       id: 'tools',
       title: 'Tools',
-      badgeBg: 'bg-emerald-100/90 text-emerald-600 border border-emerald-200/70',
-      border: 'border-white/70 hover:border-emerald-300/80',
-      cardBg: 'bg-white/40 hover:bg-white/55',
-      chipStyle: 'border-emerald-200/80 text-emerald-950 bg-emerald-100/40 hover:bg-emerald-100/75 hover:border-emerald-300 shadow-2xs',
+      badgeBg: 'bg-emerald-200/50 text-emerald-700 border border-white/70',
+      chipStyle: 'text-emerald-950 bg-emerald-200/40 hover:bg-emerald-200/60',
       icon: Wrench,
       skills: ['Git', 'GitHub', 'Docker', 'Playwright', 'Test Automation', 'Docker Compose', 'Figma'],
     },
     {
       id: 'core-cs',
       title: 'Core CS',
-      badgeBg: 'bg-purple-100/90 text-purple-600 border border-purple-200/70',
-      border: 'border-white/70 hover:border-purple-300/80',
-      cardBg: 'bg-white/40 hover:bg-white/55',
-      chipStyle: 'border-purple-200/80 text-purple-950 bg-purple-100/40 hover:bg-purple-100/75 hover:border-purple-300 shadow-2xs',
+      badgeBg: 'bg-purple-200/50 text-purple-700 border border-white/70',
+      chipStyle: 'text-purple-950 bg-purple-200/40 hover:bg-purple-200/60',
       icon: Cpu,
       skills: [
         'Object-Oriented Programming (OOP)',
@@ -63,7 +55,7 @@ export const TechnicalSkillsSection = () => {
         </h2>
       </div>
 
-      {/* 4 Frosted Blurred Glass Category Cards */}
+      {/* 4 Frosted Blurred Glass Category Cards matching Reference Image */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch">
         {skillCategories.map((category, index) => {
           const IconComponent = category.icon;
@@ -80,15 +72,17 @@ export const TechnicalSkillsSection = () => {
                 ease: 'easeOut',
               }}
               style={{
-                backdropFilter: 'blur(24px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+                backdropFilter: 'blur(28px) saturate(190%)',
+                WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.16) 100%)',
+                boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
               }}
-              className={`rounded-2xl sm:rounded-3xl border ${category.border} ${category.cardBg} p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(31,38,135,0.06)] transition-colors duration-200 flex flex-col justify-start`}
+              className="rounded-3xl border border-white/60 p-5 sm:p-6 transition-colors duration-200 flex flex-col justify-start"
             >
               {/* Card Header */}
-              <div className="flex items-center gap-3 pb-4 mb-4 border-b border-slate-200/40">
+              <div className="flex items-center gap-3 pb-4 mb-4 border-b border-white/40">
                 <div
-                  className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs ${category.badgeBg}`}
+                  className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs backdrop-blur-md ${category.badgeBg}`}
                 >
                   <IconComponent className="w-4 h-4" />
                 </div>
@@ -97,12 +91,12 @@ export const TechnicalSkillsSection = () => {
                 </h3>
               </div>
 
-              {/* Tinted Translucent Skill Badges */}
+              {/* Frosted Glass Pill Badges */}
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium border shadow-2xs transition-colors select-none ${category.chipStyle}`}
+                    className={`px-2.5 py-1 rounded-xl text-xs font-mono font-medium border border-white/60 shadow-2xs backdrop-blur-md transition-colors select-none ${category.chipStyle}`}
                   >
                     {skill}
                   </span>
