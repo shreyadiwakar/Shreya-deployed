@@ -1,21 +1,6 @@
 # Shreya Diwakar | CS Portfolio ✨
 
-An interactive, modern Computer Science developer portfolio built with React 19, Vite, Tailwind CSS, Motion, and canvas animations. Featuring soft pastel aesthetics, physics-repelling floating CS background elements, custom neon cursor, interactive terminal, virtual sound keyboard, unfolding bento boxes, zoom-scroll projects, and an in-browser portfolio customizer.
-
----
-
-## 🌟 Key Features
-
-- **Soft Pastel Light & Glassmorphism Design**: Curated color palette with clean modern typography, backdrop blurs, and responsive cards.
-- **Physics-Repelling Background**: Floating computer science symbols, binary beads, and syntax nodes that repel from the cursor interactively with customizable physics force.
-- **Custom Neon Trail Cursor**: Smooth, glowing cursor trail with toggle controls.
-- **Unfolding Bento Sections**: Scroll-linked unfolding cards highlighting education, research interests, and stats.
-- **Interactive Mechanical Data Keyboard**: Playable virtual keyboard with sound feedback and animated keycaps.
-- **Interactive CS Terminal**: Command-line interface with custom commands (`help`, `skills`, `projects`, `contact`, `clear`, `matrix`, `easteregg`).
-- **Zoom & Scroll Project Gallery**: Detailed showcases with tech badges, GitHub links, and live demos.
-- **Painting Corner**: Creative canvas corner showcasing artistic pursuits alongside engineering.
-- **Resume Viewer Modal**: Built-in resume preview and download modal.
-- **Live In-Browser Customizer**: Edit profile bio, tags, social links, and projects in real time with `localStorage` persistence.
+An interactive, modern Computer Science developer portfolio built with React 19, Vite, Tailwind CSS, Motion, and canvas animations. 
 
 ---
 
@@ -113,14 +98,3 @@ Ensure you have [Node.js](https://nodejs.org/) (v18 or higher recommended) and `
 
 ---
 
-## ✏️ Customization
-
-To personalize the information shown on the portfolio:
-1. Edit [src/data/portfolioData.js](src/data/portfolioData.js) to update default bio, education, experience, skills, and projects.
-2. Or click the **Settings / Customize** floating button on the live site to modify values directly in the browser.
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
