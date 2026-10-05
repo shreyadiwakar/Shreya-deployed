@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Palette, Video, Headphones, Camera } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const BeyondCodeSection = () => {
   const hobbies = [
@@ -26,7 +27,7 @@ export const BeyondCodeSection = () => {
       badgeBg: 'bg-sky-100/90 text-sky-600 border border-sky-200/70',
       icon: Headphones,
       description:
-        "Music is a constant part of my day — whether I'm coding, travelling, creating, or just taking a break.",
+        "Music is a constant part of my day, whether I'm coding, travelling, creating, or just taking a break.",
     },
     {
       id: 'photography',
@@ -56,41 +57,42 @@ export const BeyondCodeSection = () => {
           const IconComponent = item.icon;
 
           return (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{
-                duration: 0.45,
-                delay: index * 0.08,
-                ease: 'easeOut',
-              }}
-              style={{
-                backdropFilter: 'blur(28px) saturate(190%)',
-                WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.16) 100%)',
-                boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
-              }}
-              className="rounded-3xl border border-white/60 p-4 sm:p-5 transition-colors duration-200 flex flex-col justify-start"
-            >
-              {/* Header with Icon Badge */}
-              <div className="flex items-center gap-3 pb-3 mb-3 border-b border-slate-200/40">
-                <div
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-2xs ${item.badgeBg}`}
-                >
-                  <IconComponent className="w-4 h-4" />
+            <RevealOnScroll key={item.id} className="h-full">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.08,
+                  ease: 'easeOut',
+                }}
+                style={{
+                  backdropFilter: 'blur(28px) saturate(190%)',
+                  WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.16) 100%)',
+                  boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
+                }}
+                className="rounded-3xl border border-white/60 p-4 sm:p-5 transition-colors duration-200 flex flex-col justify-start h-full"
+              >
+                {/* Header with Icon Badge */}
+                <div className="flex items-center gap-3 pb-3 mb-3 border-b border-slate-200/40">
+                  <div
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-2xs ${item.badgeBg}`}
+                  >
+                    <IconComponent className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-heading text-sm sm:text-base font-bold text-slate-900 tracking-tight leading-snug">
+                    {item.title}
+                  </h3>
                 </div>
-                <h3 className="font-heading text-sm sm:text-base font-bold text-slate-900 tracking-tight leading-snug">
-                  {item.title}
-                </h3>
-              </div>
 
-              {/* Description Body */}
-              <p className="font-body text-slate-600 text-xs sm:text-[13px] leading-relaxed">
-                {item.description}
-              </p>
-            </motion.div>
+                {/* Description Body */}
+                <p className="font-body text-slate-600 text-xs sm:text-[13px] leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.div>
+            </RevealOnScroll>
           );
         })}
       </div>

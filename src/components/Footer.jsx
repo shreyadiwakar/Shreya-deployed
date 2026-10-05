@@ -22,11 +22,11 @@ export const Footer = ({ profile }) => {
             </div>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm mb-3">
               Computer Science &amp; Engineering undergraduate at Delhi Technological University (DTU).
-              Passionate about systems architecture, full-stack engineering, and creative technology.
+              Passionate about software development, problem solving and exploring AI/ML.
             </p>
             <div className="flex items-center gap-1.5 text-xs font-mono text-slate-500">
               <GraduationCap className="w-3.5 h-3.5 text-sky-600" />
-              <span>DTU CSE • Roll: 24/CS/425 (G-2)</span>
+              <span>DTU • CSE</span>
             </div>
           </div>
 
@@ -75,24 +75,7 @@ export const Footer = ({ profile }) => {
                 Connect
               </h4>
               <ul className="space-y-2 text-xs text-slate-600">
-                <li>
-                  <a
-                    href={`mailto:${profile?.email || 'diwakar.shreya.2006@gmail.com'}`}
-                    className="hover:text-slate-900 transition-colors flex items-center gap-1.5"
-                  >
-                    <Mail className="w-3 h-3 text-sky-600" />
-                    <span>Email</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`tel:${profile?.phone || '+918851493754'}`}
-                    className="hover:text-slate-900 transition-colors flex items-center gap-1.5"
-                  >
-                    <Phone className="w-3 h-3 text-emerald-600" />
-                    <span>Phone</span>
-                  </a>
-                </li>
+              
                 <li>
                   <a
                     href="https://github.com/shreyadiwakar"
@@ -130,9 +113,7 @@ export const Footer = ({ profile }) => {
             </button>
 
             <div className="mt-4 md:mt-0 text-left md:text-right">
-              <span className="inline-block px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-[11px] font-mono text-slate-600">
-                Delhi Technological University (DTU)
-              </span>
+              
             </div>
           </div>
         </div>
@@ -141,9 +122,8 @@ export const Footer = ({ profile }) => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-normal">
           <p>© {currentYear} {profile?.name || 'Shreya Diwakar'}. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            Built with React &amp; Tailwind CSS • Crafted with
-            <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
-            for Engineering &amp; Design
+           Made with Made with ♥
+            by Shreya Diwakar
           </p>
         </div>
       </div>

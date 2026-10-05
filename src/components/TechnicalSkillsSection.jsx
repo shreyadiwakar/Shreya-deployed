@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Code2, Code, Wrench, Cpu } from 'lucide-react';
+import { RevealOnScroll } from './RevealOnScroll';
 
 export const TechnicalSkillsSection = () => {
   const skillCategories = [
@@ -61,48 +62,49 @@ export const TechnicalSkillsSection = () => {
           const IconComponent = category.icon;
 
           return (
-            <motion.div
-              key={category.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: 'easeOut',
-              }}
-              style={{
-                backdropFilter: 'blur(28px) saturate(190%)',
-                WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.16) 100%)',
-                boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
-              }}
-              className="rounded-3xl border border-white/60 p-5 sm:p-6 transition-colors duration-200 flex flex-col justify-start"
-            >
-              {/* Card Header */}
-              <div className="flex items-center gap-3 pb-4 mb-4 border-b border-white/40">
-                <div
-                  className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs backdrop-blur-md ${category.badgeBg}`}
-                >
-                  <IconComponent className="w-4 h-4" />
-                </div>
-                <h3 className="font-heading text-base sm:text-lg font-bold text-slate-900 tracking-tight">
-                  {category.title}
-                </h3>
-              </div>
-
-              {/* Frosted Glass Pill Badges */}
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={`px-2.5 py-1 rounded-xl text-xs font-mono font-medium border border-white/60 shadow-2xs backdrop-blur-md transition-colors select-none ${category.chipStyle}`}
+            <RevealOnScroll key={category.id} className="h-full">
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: 'easeOut',
+                }}
+                style={{
+                  backdropFilter: 'blur(28px) saturate(190%)',
+                  WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.68) 100%)',
+                  boxShadow: '0 12px 36px 0 rgba(31, 38, 135, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.55)',
+                }}
+                className="rounded-3xl border border-white/80 p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(15,23,42,0.12)] flex flex-col justify-start h-full"
+              >
+                {/* Card Header */}
+                <div className="flex items-center gap-3 pb-4 mb-4 border-b border-white/40">
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs backdrop-blur-md ${category.badgeBg}`}
                   >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+                    <IconComponent className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-heading text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                    {category.title}
+                  </h3>
+                </div>
+
+                {/* Frosted Glass Pill Badges */}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className={`px-2.5 py-1 rounded-xl text-xs font-mono font-medium border border-white/60 shadow-2xs backdrop-blur-md transition-colors select-none ${category.chipStyle}`}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </RevealOnScroll>
           );
         })}
       </div>

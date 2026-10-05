@@ -17,7 +17,7 @@ export const SleepyCatCompanion = ({
   userName = 'Shreya',
   college = 'Delhi Technological University',
 }) => {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0.05);
   const [isWalking, setIsWalking] = useState(false);
   const [direction, setDirection] = useState('right');
   const [walkFrame, setWalkFrame] = useState(0);
@@ -138,8 +138,8 @@ export const SleepyCatCompanion = ({
     );
   }
 
-  // Calculate cat position horizontally (clamped between 3% and 92% of screen)
-  const leftPercent = 3 + scrollProgress * 89;
+  // Start the cat already 5% along the path, as requested.
+  const leftPercent = 5 + scrollProgress * 89;
 
   return (
     <aside aria-label="Sleepy cat scroll companion" className="fixed bottom-0 left-0 right-0 z-35 pointer-events-none select-none">
@@ -161,19 +161,6 @@ export const SleepyCatCompanion = ({
         }}
       >
         {/* Thought / Speech Bubble */}
-        {speechBubble && (
-          <div
-            className="absolute -top-16 left-1/2 -translate-x-1/2 w-52 sm:w-64 p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-pink-200 text-[11px] font-sans text-slate-800 shadow-lg text-center leading-tight animate-fade-in z-50 pointer-events-none"
-            style={{ transform: direction === 'left' ? 'translateX(-50%) scaleX(-1)' : 'translateX(-50%)' }}
-          >
-            <div className="relative">
-              {speechBubble}
-              {/* Little arrow at bottom of bubble */}
-              <div className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 w-2 h-2 bg-white border-b border-r border-pink-200 rotate-45" />
-            </div>
-          </div>
-        )}
-
         {/* Floating "Z z Z" bubbles when sleeping */}
         {isSleeping && !isWalking && (
           <div
@@ -331,47 +318,9 @@ export const SleepyCatCompanion = ({
         </button>
 
         {/* Small Progress Paws Indicator */}
-        <div
-          className="text-center text-[9px] font-mono text-slate-400 bg-white/80 px-1.5 py-0.5 rounded-md border border-slate-200/60 shadow-2xs mt-0.5 whitespace-nowrap"
-          style={{ transform: direction === 'left' ? 'scaleX(-1)' : 'none' }}
-        >
-          {isWalking ? (
-            <span className="text-emerald-600 font-semibold">🐾 Walking... {Math.round(scrollProgress * 100)}%</span>
-          ) : (
-            <span className="text-slate-500">💤 Loafing ({petCount > 0 ? `${petCount} pets` : 'click to pet'})</span>
-          )}
-        </div>
       </div>
 
       {/* Mini Controls on the bottom-right corner for mute / minimize */}
-      <div className="fixed bottom-2 right-3 pointer-events-auto flex items-center gap-1.5 z-40 bg-white/80 backdrop-blur-xs px-2 py-1 rounded-full border border-slate-200 text-slate-600 text-[11px] font-mono shadow-xs">
-        <button
-          onClick={() => setSoundEnabled(!soundEnabled)}
-          className={`p-1 rounded-full transition-colors ${
-            soundEnabled ? 'text-emerald-600 bg-emerald-50' : 'text-slate-400 hover:text-slate-600'
-          }`}
-          title={soundEnabled ? 'Cat sounds enabled (click to mute)' : 'Enable gentle cat purr synth'}
-        >
-          {soundEnabled ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
-        </button>
-
-        <button
-          onClick={handlePetCat}
-          className="px-2 py-0.5 rounded-full bg-pink-50 text-pink-700 hover:bg-pink-100 transition-all font-semibold flex items-center gap-1 text-[10px]"
-          title="Pet Shreya's cat"
-        >
-          <Heart className="w-2.5 h-2.5 fill-pink-500 text-pink-500" />
-          Pet
-        </button>
-
-        <button
-          onClick={() => setIsMinimized(true)}
-          className="p-1 rounded-full text-slate-400 hover:text-slate-600 text-[10px]"
-          title="Minimize cat"
-        >
-          ×
-        </button>
-      </div>
     </aside>
   );
 };

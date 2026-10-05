@@ -12,7 +12,7 @@ export const AboutMeSection = () => {
 
           <div className="space-y-4 font-body text-slate-800 text-sm sm:text-base leading-relaxed">
             <p>
-              Hey! I'm Shreya — a Computer Science student at Delhi Technological University who enjoys turning ideas into things that actually work. I'm interested in software development, problem solving and exploring AI/ML.
+              Hey! I'm Shreya, a Computer Science student at Delhi Technological University who enjoys turning ideas into things that actually work. I'm interested in software development, problem solving and exploring AI/ML.
             </p>
 
             <p>

@@ -12,9 +12,15 @@ export const NeonCursor = ({ enabled = true }) => {
   const targetRef = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
+    if (!enabled) return;
+
+    document.body.style.cursor = 'auto';
+
     if (window.matchMedia('(pointer: coarse)').matches) {
       setIsTouchDevice(true);
-      return;
+      return () => {
+        document.body.style.cursor = '';
+      };
     }
 
     const handleMouseMove = (e) => {
@@ -58,13 +64,14 @@ export const NeonCursor = ({ enabled = true }) => {
       document.body.removeEventListener('mouseleave', handleMouseLeave);
       document.body.removeEventListener('mouseenter', handleMouseEnter);
       cancelAnimationFrame(animationFrameId);
+      document.body.style.cursor = '';
     };
-  }, []);
+  }, [enabled]);
 
   if (!enabled || isTouchDevice || !isVisible) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden" style={{ cursor: 'auto' }}>
       {isClicking ? (
         /* Magnifying Glass shape on click with zero blur */
         <div
