@@ -24,7 +24,7 @@ export const ResumeModal = ({
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <h3 className="font-bold text-sm text-slate-800 font-mono">
-              {profile.name} — Official Resume
+              {profile.name} - Official Resume
             </h3>
           </div>
 

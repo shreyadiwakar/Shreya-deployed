@@ -14,7 +14,7 @@ export const initialProfile = {
   department: 'Computer Science Engineering',
   rollNo: '24/CS/425',
   hobby: 'Digital & Acrylic Painting, Creative Computing',
-  status: 'B.Tech CSE @ Delhi Technological University (2024–2028)',
+  status: 'B.Tech CSE @ Delhi Technological University (2024-2028)',
   bio: 'Computer Science Engineering student at Delhi Technological University (formerly DCE) with strong foundations in full-stack development, automated testing, and systems programming. Experienced in developing Playwright E2E test suites and Dockerizing microservices at C-DOT, building full-stack web applications in React & Node.js, and leading tech/content initiatives at Sponsogram. Passionate about software architecture and creative computing.',
   shortBio: 'B.Tech CSE at Delhi Technological University (formerly DCE). Software Intern at C-DOT specializing in Playwright E2E automation & Docker containerization, full-stack React/Node.js web developer, and startup technical content manager.',
   philosophy: 'Disciplined engineering with automated test rigor, clean containerized architectures, and intuitive user-centric design.',
@@ -78,7 +78,7 @@ export const educationData = [
     board: 'DTU (formerly DCE)',
     department: 'Department of Computer Science and Engineering',
     rollNo: '24/CS/425',
-    period: '2024 — 2028',
+    period: '2024 - 2028',
     gradeOrGpa: '8.234 CGPA',
     coursework: [
       'Data Structures & Algorithms (DSA)',
@@ -129,7 +129,7 @@ export const experienceData = [
     role: 'Software Intern',
     company: 'Centre for Development of Telematics (C-DOT)',
     location: 'Delhi, India',
-    period: 'June 2026 — July 2026',
+    period: 'June 2026 - July 2026',
     accent: 'blue',
     description: [
       'Developed automated end-to-end (E2E) test suites using Playwright, utilizing page locators, assertions, waits, cross-browser automation, Playwright Codegen, and the Planner, Generator, and Healer AI Test Agents to generate, execute, and maintain tests for critical website workflows.',
@@ -150,7 +150,7 @@ export const experienceData = [
     role: 'Content and Video Editing Intern',
     company: 'Sponsogram',
     location: 'Delhi, India',
-    period: 'Feb 2026 — April 2026',
+    period: 'Feb 2026 - April 2026',
     accent: 'pink',
     description: [
       'Selected as a core member of the Technical Team and Content Manager at Sponsogram in recognition of strong contributions during the internship.',
@@ -168,6 +168,42 @@ export const experienceData = [
 ];
 
 export const initialProjects = [
+  {
+    id: 'revive-recycling-platform',
+    title: 'ReVive - Turn Waste into Worth',
+    tagline: 'Full-stack platform connecting residents, delivery partners, and recycling centers to simplify recycling through pickup scheduling, waste verification, and rewards.',
+    description: 'Developed a full-stack platform connecting residents, delivery partners, and recycling centers to simplify recycling through pickup scheduling, waste verification, and rewards.',
+    longDescription: 'Engineered a comprehensive recycling ecosystem deployed on AWS, leveraging Lambda, API Gateway, DynamoDB, and Cognito for serverless APIs, scalable data management, and secure authentication. The platform streamlines waste collection by enabling residents to schedule pickups, delivery partners to verify waste, and recycling centers to manage operations - all incentivized through a built-in rewards system.',
+    category: 'Full-Stack',
+    accentColor: 'green',
+    techStack: [
+      'React.js',
+      'Vite',
+      'Tailwind CSS',
+      'Node.js',
+      'TypeScript',
+      'AWS Lambda',
+      'API Gateway',
+      'DynamoDB',
+      'AWS Cognito',
+      'AWS SAM',
+      'Supabase',
+      'Vercel',
+      'Leaflet',
+      'Docker',
+    ],
+    date: 'October 2026',
+    metrics: 'Serverless AWS architecture with Lambda, API Gateway, DynamoDB & Cognito for scalable recycling operations',
+    githubUrl: 'https://github.com/shreyadiwakar/ReVive',
+    liveUrl: '',
+    featured: true,
+    architectureHighlights: [
+      'Built a multi-role platform with distinct interfaces for residents, delivery partners, and recycling centers with role-based access control',
+      'Deployed on AWS using Lambda, API Gateway, DynamoDB, and Cognito for fully serverless, scalable backend infrastructure',
+      'Implemented pickup scheduling, real-time waste verification workflows, and a gamified rewards system to incentivize recycling',
+      'Integrated Leaflet for interactive map-based location services and Supabase for supplementary data management',
+    ],
+  },
   {
     id: 'social-media-app',
     title: 'Social Media Web App',
@@ -257,7 +293,7 @@ export const initialProjects = [
 
 export const achievements = [
   {
-    title: 'Core Tech & Content Manager — Sponsogram',
+    title: 'Core Tech & Content Manager - Sponsogram',
     org: 'Sponsogram Startup Initiatives',
     description: 'Selected as a Core Tech and Content Manager; contributed to startup initiatives, collaborated in teams building web products, hired and managed interns, and contributed strategic ideas for startup expansion.',
     accent: 'purple',

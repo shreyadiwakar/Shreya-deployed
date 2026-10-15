@@ -72,7 +72,7 @@ export const VideoCursorCharacter = () => {
   }, []);
 
   useEffect(() => {
-    // 2. Mouse tracking on window
+    // 2. Mouse & Touch tracking on window
     const handleMouseMove = (e) => {
       mousePosRef.current = { x: e.clientX, y: e.clientY };
     };
@@ -83,12 +83,29 @@ export const VideoCursorCharacter = () => {
       inDeadzoneRef.current = true;
     };
 
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        mousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+
+    const handleTouchEnd = () => {
+      mousePosRef.current = { x: null, y: null };
+      inDeadzoneRef.current = true;
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 
@@ -119,14 +136,47 @@ export const VideoCursorCharacter = () => {
         canvas.height = H;
       }
 
-      // Responsive edge-to-edge cover scaling:
-      // Eliminates all rectangular seams, side extensions, and background distortion
-      const scale = Math.max(W / 1280, H / 720);
-      const frameW = Math.round(1280 * scale);
-      const frameH = Math.round(720 * scale);
-      const frameX = Math.round((W - frameW) / 2);
-      // Align to bottom so desk sits firmly at the bottom of viewport
-      const frameY = H - frameH;
+      // Intelligent responsive character sizing & ceiling clearance
+      const isMobile = W < 768;
+      let scale, frameW, frameH, frameX, frameY;
+
+      if (isMobile) {
+        // Mobile layout: Size character to fit mobile viewport
+        scale = Math.min(W / 580, (H * 0.44) / (720 * 0.72));
+        scale = Math.max(scale, 0.44);
+        frameW = Math.round(1280 * scale);
+        frameH = Math.round(720 * scale);
+        frameX = Math.round((W - frameW) / 2);
+        // Head sits cleanly at 68px below ceiling (leaves clearance below navbar)
+        const headTopTarget = 68;
+        frameY = Math.round(headTopTarget - frameH * 0.22);
+      } else {
+        // Desktop / Tablet layout:
+        // 1. Guaranteed headroom: top of head is between 80px and 110px below ceiling
+        const headTopTarget = Math.max(80, Math.min(110, H * 0.13));
+
+        // 2. Full Edge-to-Edge Coverage:
+        // Scale MUST cover 100% of canvas width (scale >= W / 1280) to eliminate all left/right seams!
+        // Scale MUST also ensure the desk reaches the bottom (scale >= (H - headTopTarget) / (720 * 0.78)).
+        scale = Math.max(W / 1280, (H - headTopTarget) / (720 * 0.78));
+
+        frameW = Math.round(1280 * scale);
+        frameH = Math.round(720 * scale);
+
+        // Position horizontally: dead-center
+        frameX = Math.round((W - frameW) / 2);
+
+        // Position vertically: head top stays at headTopTarget
+        frameY = Math.round(headTopTarget - frameH * 0.22);
+      }
+
+      // Background gradient matching HeroSection studio ambient tone exactly
+      const bgGrad = ctx.createLinearGradient(0, 0, W, 0);
+      bgGrad.addColorStop(0, '#e2dcd5');
+      bgGrad.addColorStop(0.5, '#ded7cf');
+      bgGrad.addColorStop(1, '#c7c1b8');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
 
       // Mouse tracking relative to face center
       const mouse = mousePosRef.current;
@@ -175,11 +225,18 @@ export const VideoCursorCharacter = () => {
         targetFrame = centerImageRef.current;
       }
 
-      // Draw active frame spanning 100% of canvas with zero seams or distortion
+      // Draw active frame
       const activeFrame = (targetFrame && targetFrame.complete) ? targetFrame : lastActiveFrameRef.current;
       if (activeFrame && activeFrame.complete) {
         lastActiveFrameRef.current = activeFrame;
         ctx.drawImage(activeFrame, frameX, frameY, frameW, frameH);
+
+        // Only extend desk if photo bottom does not reach canvas bottom
+        const frameBottomY = frameY + frameH;
+        if (frameBottomY < H) {
+          ctx.fillStyle = '#decbb7';
+          ctx.fillRect(0, frameBottomY - 1, W, H - frameBottomY + 2);
+        }
       }
 
       animFrameIdRef.current = requestAnimationFrame(render);

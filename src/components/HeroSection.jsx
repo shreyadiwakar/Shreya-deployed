@@ -28,21 +28,21 @@ export const HeroSection = ({ profile, onOpenResume, onOpenCustomizer }) => {
       id="hero-section"
       className="relative min-h-screen w-full bg-gradient-to-r from-[#e2dcd5] via-[#ded7cf] to-[#c7c1b8] text-neutral-900 overflow-hidden select-none"
     >
-      <div className="fixed left-1/2 top-4 sm:top-6 -translate-x-1/2 z-50 flex items-center justify-center px-4 pointer-events-none">
-        <div className="frosted-pill flex items-center justify-center gap-4 sm:gap-8 px-5 sm:px-7 py-2.5 rounded-full transition-all pointer-events-auto w-[min(72vw,540px)] shadow-[0_8px_28px_rgba(15,23,42,0.06)]">
-          <button onClick={() => scrollTo('about-section')} className="text-xs sm:text-sm font-bold tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-about">
+      <div className="fixed left-1/2 top-4 sm:top-6 -translate-x-1/2 z-50 flex items-center justify-center px-3 sm:px-4 pointer-events-none">
+        <div className="frosted-pill flex items-center justify-center gap-3 sm:gap-8 px-4 sm:px-7 py-2.5 rounded-full transition-all pointer-events-auto w-[min(92vw,540px)] shadow-[0_8px_28px_rgba(15,23,42,0.06)]">
+          <button onClick={() => scrollTo('about-section')} className="text-[11px] sm:text-sm font-bold tracking-[0.16em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-about">
             ABOUT
           </button>
-          <span className="text-neutral-400 text-lg">•</span>
-          <button onClick={() => scrollTo('skills-section')} className="text-xs sm:text-sm font-bold tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-skills">
+          <span className="text-neutral-400 text-base sm:text-lg">•</span>
+          <button onClick={() => scrollTo('skills-section')} className="text-[11px] sm:text-sm font-bold tracking-[0.16em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-skills">
             SKILLS
           </button>
-          <span className="text-neutral-400 text-lg">•</span>
-          <button onClick={() => scrollTo('projects-gallery')} className="text-xs sm:text-sm font-bold tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-work">
+          <span className="text-neutral-400 text-base sm:text-lg">•</span>
+          <button onClick={() => scrollTo('projects-gallery')} className="text-[11px] sm:text-sm font-bold tracking-[0.16em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-work">
             WORK
           </button>
-          <span className="text-neutral-400 text-lg">•</span>
-          <button onClick={() => scrollTo(['contact-section', 'data-keyboard-section', 'footer'])} className="text-xs sm:text-sm font-bold tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-contact">
+          <span className="text-neutral-400 text-base sm:text-lg">•</span>
+          <button onClick={() => scrollTo(['contact-section', 'data-keyboard-section', 'footer'])} className="text-[11px] sm:text-sm font-bold tracking-[0.16em] uppercase text-neutral-700 hover:text-neutral-950 transition-colors cursor-pointer" id="hero-nav-contact">
             CONNECT
           </button>
         </div>
@@ -58,58 +58,58 @@ export const HeroSection = ({ profile, onOpenResume, onOpenCustomizer }) => {
       </div>
 
       {/* 
-        3. Foreground Overlay Content (Left side & Lower Left)
-        Framing the centered model, matching the exact reference photo layout.
+        3. Foreground Overlay Content (Left side on desktop, compact bottom card on mobile)
+        Guaranteed zero overlap over the 3D character with constrained width.
       */}
-      <div className="relative z-20 max-w-7xl mx-auto min-h-screen flex flex-col justify-between px-6 sm:px-10 lg:px-14 py-8 pointer-events-none">
-        {/* Top spacer to account for top navbar */}
-        <div className="h-16 sm:h-20" />
-
+      <div className="relative z-20 max-w-7xl mx-auto min-h-screen flex flex-col justify-end md:justify-center px-4 sm:px-8 lg:px-14 pb-5 sm:pb-8 md:pb-0 pointer-events-none">
         {/* Left Side Content Card / Typography */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-md lg:max-w-lg pointer-events-none my-auto space-y-4 text-left"
+          className="w-full sm:max-w-[340px] md:max-w-[360px] lg:max-w-[380px] pointer-events-none space-y-2 sm:space-y-3.5 text-left bg-white/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-4 sm:p-5 md:p-0 rounded-2xl md:rounded-none border border-white/70 md:border-none shadow-lg md:shadow-none"
         >
           {/* Small Top Label */}
-          <div className="inline-flex items-center gap-2 pointer-events-none">
-            <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-neutral-800 uppercase font-mono">
+          <div className="inline-flex items-center gap-1.5 pointer-events-none">
+            <span className="text-[11px] sm:text-xs font-bold tracking-[0.22em] text-neutral-800 uppercase font-mono">
               HI, I'M
             </span>
           </div>
 
-          {/* Large Script Cursive Name */}
+          {/* Large Script Cursive Name - Clean 2-line stack prevents spreading into character area */}
           <h1
             id="hero-script-name"
-            className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl text-neutral-900 font-normal leading-[0.95] tracking-tight font-['Pacifico',cursive] drop-shadow-sm select-none py-1 pointer-events-none"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 font-normal leading-[1.02] tracking-tight font-['Pacifico',cursive] drop-shadow-sm select-none py-0.5 pointer-events-none"
           >
-            Shreya Diwakar
+            <span className="block">Shreya</span>
+            <span className="block">Diwakar</span>
           </h1>
 
-          <p className="text-lg sm:text-xl md:text-2xl font-semibold text-neutral-800 leading-relaxed pointer-events-none">
+          <p className="text-sm sm:text-base md:text-lg font-semibold text-neutral-800 leading-snug pointer-events-none">
             I code. I create. I’m always learning.
           </p>
 
-          <p className="text-base sm:text-lg text-neutral-700 leading-relaxed pointer-events-none">
-            Third-year Computer Science student at <br></br>
+          <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed pointer-events-none">
+            Third-year Computer Science student at <br className="hidden sm:inline" />
             Delhi Technological University (DTU).
           </p>
 
-          <p className="text-base sm:text-lg italic text-neutral-700 leading-relaxed pointer-events-none">
+          <p className="text-[11px] sm:text-xs italic text-neutral-600 leading-relaxed pointer-events-none">
             Turning ideas into things that work.
           </p>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => scrollTo(['contact-section', 'data-keyboard-section', 'footer'])}
-            className="soft-button px-8 py-3.5 rounded-full bg-white/85 hover:bg-neutral-900 text-neutral-900 hover:text-white border-2 border-neutral-900 text-xs sm:text-sm font-bold tracking-widest uppercase backdrop-blur-md shadow-lg transition-all flex items-center gap-2 cursor-pointer pointer-events-auto"
-            id="hero-letstalk-pill"
-          >
-            <span>LET'S TALK</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </motion.button>
+          <div className="pt-1">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => scrollTo(['contact-section', 'data-keyboard-section', 'footer'])}
+              className="soft-button px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/90 hover:bg-neutral-900 text-neutral-900 hover:text-white border-2 border-neutral-900 text-[11px] sm:text-xs font-bold tracking-widest uppercase backdrop-blur-md shadow-md transition-all flex items-center gap-2 cursor-pointer pointer-events-auto"
+              id="hero-letstalk-pill"
+            >
+              <span>LET'S TALK</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </motion.button>
+          </div>
         </motion.div>
       </div>
 
