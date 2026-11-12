@@ -214,6 +214,19 @@ export const ResumeModal = ({
                       >
                         GitHub
                       </a>
+                      {proj.liveUrl && (
+                        <>
+                          <span className="text-slate-400 font-mono">•</span>
+                          <a
+                            href={proj.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-emerald-700 hover:underline text-xs font-mono"
+                          >
+                            Live Demo
+                          </a>
+                        </>
+                      )}
                     </div>
                     {proj.date && (
                       <span className="text-xs font-mono text-slate-600 font-medium shrink-0">

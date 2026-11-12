@@ -175,8 +175,8 @@ export const InteractiveDataKeyboard = () => {
   return (
     <section id="data-keyboard-section" className="relative py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto z-10">
       {/* Title: -Let's connect */}
-      <div className="text-center max-w-2xl mx-auto mb-6">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight font-heading">
+      <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
           Let's <span className="text-sky-600">connect</span>
         </h2>
       </div>

@@ -122,8 +122,9 @@ export const Footer = ({ profile }) => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-normal">
           <p>© {currentYear} {profile?.name || 'Shreya Diwakar'}. All rights reserved.</p>
           <p className="flex items-center gap-1">
-           Made with Made with ♥
-            by Shreya Diwakar
+            <span>Made with</span>
+            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline-block mx-0.5" />
+            <span>by {profile?.name || 'Shreya Diwakar'}</span>
           </p>
         </div>
       </div>

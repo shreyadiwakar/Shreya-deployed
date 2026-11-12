@@ -37,7 +37,7 @@ export default function App() {
   });
 
   const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('shreya_portfolio_projects_v2');
+    const saved = localStorage.getItem('shreya_portfolio_projects_v4');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -62,6 +62,8 @@ export default function App() {
     setProfile(initialProfile);
     setProjects(initialProjects);
     localStorage.removeItem('shreya_portfolio_profile_v2');
+    localStorage.removeItem('shreya_portfolio_projects_v4');
+    localStorage.removeItem('shreya_portfolio_projects_v3');
     localStorage.removeItem('shreya_portfolio_projects_v2');
     localStorage.removeItem('shreya_portfolio_profile');
     localStorage.removeItem('shreya_portfolio_projects');
